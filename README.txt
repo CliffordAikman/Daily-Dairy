@@ -1,10 +1,16 @@
-DAILY DAIRY APP PACKAGE
+DAILY DAIRY APP - UPDATE SAFE
 
-Files:
-- index.html
-- manifest.webmanifest
-- service-worker.js
-- icon-192.png
-- icon-512.png
+Based on Daily Dairy v92.
 
-This package must be uploaded to an HTTPS website before Android Chrome can install it as a proper app.
+Future updates:
+1. Keep the same GitHub repository and Pages address.
+2. Replace the app files in that same repository.
+3. Open Daily Dairy once while online.
+4. The installed app checks for the new version.
+5. Saved diaries in localStorage stay on the phone.
+
+Offline:
+- If there is no signal, the last cached app still opens.
+
+Important:
+- Do not clear Daily Dairy/Chrome site data unless you have exported a backup.
