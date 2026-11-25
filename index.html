@@ -4310,19 +4310,19 @@ td,th{border-color:#3b4448 !important;}
 
 <style>
 /* v101 - TCG Day Controls / Client Information */
-#dayControlsDetails > summary{
+#dayControlsDetails > summary, #clientInfoDetails > summary{
   background:linear-gradient(180deg,#171717,#0f0f0f)!important;
   border:1px solid #e9570a!important;
   box-shadow:inset 4px 0 0 #e9570a,0 0 0 1px rgba(233,87,10,.14)!important;
 }
-#dayControlsDetails > summary span:first-child{
+#dayControlsDetails > summary, #clientInfoDetails > summary span:first-child{
   color:#ff6818!important;
   font-weight:900!important;
   letter-spacing:.035em!important;
   text-transform:uppercase!important;
 }
-#dayControlsDetails > summary .section-toggle-text{color:#f3b18c!important}
-#dayControlsDetails[open] > summary{box-shadow:inset 4px 0 0 #ff6818,0 0 14px rgba(233,87,10,.14)!important}
+#dayControlsDetails > summary, #clientInfoDetails > summary .section-toggle-text{color:#f3b18c!important}
+#dayControlsDetails[open] > summary, #clientInfoDetails[open] > summary{box-shadow:inset 4px 0 0 #ff6818,0 0 14px rgba(233,87,10,.14)!important}
 .client-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
 .client-info-grid label,.client-email-control label,.client-location-control label{display:block;font-weight:800;margin:0 0 5px}
 .client-info-grid input,.client-email-control input{width:100%;box-sizing:border-box}
@@ -4817,241 +4817,40 @@ td,th{border-color:#3b4448 !important;}
 #toolboxTalkCounter{letter-spacing:.01em}
 </style>
 
-<style id="v119-nav-layout">
-/* v119: Hours/reporting remains background-only; visible phone navigation has 3 items. */
-@media (max-width:700px){.mobile-bottom-nav{grid-template-columns:repeat(3,1fr)!important;}}
-</style>
+<style id="v117-compact-utility-sections">
+/* v117: compact utility headers; hours remain calculated in the background but are not shown in the app UI. */
+#hoursCard, #hoursReportsCard { display:none !important; }
 
-<style id="v120-section-alignment">
-/* ===== v120 section alignment / visual consistency ===== */
-@media (max-width:700px){
-  /* Make all utility cards use exactly the same outside width and spacing */
-  #delayCard,
-  #accessIssuesCard,
-  #timelineCard,
-  #toolboxTalkCard,
-  #clientInfoCard,
-  #syncCard,
-  #savedDaysCard{
-    width:100% !important;
-    margin:8px 0 !important;
-    padding:8px !important;
-    border-radius:15px !important;
-    overflow:hidden !important;
-  }
-
-  /* Standardize every collapsible header */
-  #delayDetails > summary,
-  #accessDetails > summary,
-  #timelineDetails > summary,
-  #toolboxTalkDetails > summary,
-  #clientInfoDetails > summary,
-  #syncDetails > summary,
-  #savedDaysDetails > summary{
-    width:100% !important;
-    min-height:54px !important;
-    height:54px !important;
-    margin:0 !important;
-    padding:0 14px !important;
-    border-radius:12px !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
-    gap:10px !important;
-    box-sizing:border-box !important;
-    line-height:1 !important;
-  }
-
-  /* Keep the main title perfectly aligned at the same left edge */
-  #delayDetails > summary > span:first-child,
-  #accessDetails > summary > span:first-child,
-  #timelineDetails > summary > span:first-child,
-  #toolboxTalkDetails > summary > span:first-child,
-  #clientInfoDetails > summary > span:first-child,
-  #syncDetails > summary > span:first-child,
-  #savedDaysDetails > summary > span:first-child{
-    margin:0 !important;
-    padding:0 !important;
-    flex:0 1 auto !important;
-    font-size:16px !important;
-    font-weight:900 !important;
-    line-height:1.05 !important;
-    letter-spacing:0 !important;
-  }
-
-  /* Right-side Tap to open / close text sits in one straight column */
-  #delayDetails .section-toggle-text,
-  #accessDetails .section-toggle-text,
-  #toolboxTalkDetails .section-toggle-text,
-  #clientInfoDetails .section-toggle-text,
-  #syncDetails .section-toggle-text,
-  #savedDaysDetails .section-toggle-text,
-  #timelineDetails .timeline-toggle-text{
-    margin-left:auto !important;
-    margin-right:4px !important;
-    padding:0 !important;
-    flex:0 0 auto !important;
-    font-size:10px !important;
-    line-height:1 !important;
-    white-space:nowrap !important;
-    align-self:center !important;
-  }
-
-  /* Put all arrows at the same far-right position */
-  #delayDetails > summary::after,
-  #accessDetails > summary::after,
-  #timelineDetails > summary::after,
-  #toolboxTalkDetails > summary::after,
-  #clientInfoDetails > summary::after,
-  #syncDetails > summary::after,
-  #savedDaysDetails > summary::after{
-    margin:0 !important;
-    padding:0 !important;
-    flex:0 0 12px !important;
-    width:12px !important;
-    text-align:center !important;
-    font-size:15px !important;
-    line-height:1 !important;
-  }
-
-  /* Match open-section content to the header's inner edge */
-  #delayDetails .section-collapse-body,
-  #accessDetails .section-collapse-body,
-  #toolboxTalkDetails .section-collapse-body,
-  #clientInfoDetails .section-collapse-body,
-  #syncDetails .section-collapse-body,
-  #savedDaysDetails .section-collapse-body,
-  #timelineDetails .timeline-collapse-body{
-    margin:0 !important;
-    padding:10px 6px 6px !important;
-  }
-
-  /* Saved-day rows line up neatly with the purple header */
-  #savedDaysList{
-    margin:0 !important;
-    padding:0 !important;
-  }
-  #savedDaysList > *{
-    width:100% !important;
-    margin:7px 0 0 !important;
-    box-sizing:border-box !important;
-  }
-
-  /* Day Controls title is long: keep it clean rather than stretching oddly */
-  #clientInfoDetails > summary > span:first-child{
-    font-size:15px !important;
-    white-space:nowrap !important;
-  }
+#timelineCard, #syncCard, #savedDaysCard {
+  padding:8px !important;
+  margin-top:8px !important;
+  margin-bottom:8px !important;
+  border-radius:18px !important;
 }
-
-/* Desktop/tablet alignment too */
-@media (min-width:701px){
-  #delayCard,
-  #accessIssuesCard,
-  #timelineCard,
-  #toolboxTalkCard,
-  #clientInfoCard,
-  #syncCard,
-  #savedDaysCard{
-    width:100%;
-  }
-}
-</style>
-
-
-<style id="v121-uniform-day-controls">
-/* ===== v121: Day Controls now uses the exact same tab shell/layout as the other utility tabs ===== */
-#dayControlsCard{
-  width:100%!important;
-  margin:8px 0!important;
-  padding:8px!important;
-  border-radius:15px!important;
-  overflow:hidden!important;
-}
-#dayControlsDetails > summary{
-  width:100%!important;
-  min-height:62px!important;
-  margin:0!important;
-  padding:0 17px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  gap:10px!important;
-  box-sizing:border-box!important;
-  background:linear-gradient(180deg,#151d22,#0d1317)!important;
-  border:1px solid #744326!important;
-  border-radius:15px!important;
-  box-shadow:inset 4px 0 0 #ff6a00,0 5px 15px rgba(0,0,0,.18)!important;
-  color:#ff6a00!important;
-  font-size:19px!important;
-  line-height:1.1!important;
-  font-weight:900!important;
-  letter-spacing:.01em!important;
-  text-transform:none!important;
-}
-#dayControlsDetails > summary > span:first-child{
-  margin:0!important;padding:0!important;flex:0 1 auto!important;
-  color:#ff6a00!important;font-weight:900!important;letter-spacing:.01em!important;
-}
-#dayControlsDetails > summary .section-toggle-text{
-  margin-left:auto!important;margin-right:4px!important;padding:0!important;
-  flex:0 0 auto!important;color:#aab2b8!important;font-size:12px!important;
-  line-height:1!important;font-weight:700!important;white-space:nowrap!important;align-self:center!important;
-}
-#dayControlsDetails > summary::after{
-  margin:0!important;padding:0!important;flex:0 0 12px!important;width:12px!important;
-  text-align:center!important;color:#ff6a00!important;font-size:20px!important;line-height:1!important;font-weight:900!important;
-}
-#dayControlsDetails[open] > summary{
-  box-shadow:inset 4px 0 0 #ff6a00,0 0 16px rgba(255,106,0,.20)!important;
-}
-#dayControlsDetails > .section-collapse-body{margin:0!important;padding:10px 6px 6px!important;}
-@media(max-width:700px){
-  #dayControlsDetails > summary{
-    min-height:54px!important;height:54px!important;padding:0 14px!important;
-    border-radius:12px!important;font-size:16px!important;line-height:1!important;
-  }
-  #dayControlsDetails > summary > span:first-child{
-    font-size:15px!important;line-height:1.05!important;white-space:nowrap!important;letter-spacing:0!important;
-  }
-  #dayControlsDetails > summary .section-toggle-text{font-size:10px!important;}
-  #dayControlsDetails > summary::after{font-size:15px!important;}
-}
-</style>
-
-
-<style id="v124-day-controls-final-alignment">
-/* v124: make Day Controls use the same inset/width geometry as the other utility tabs. */
-#dayControlsCard{
-  width:100% !important;
-  margin:8px 0 !important;
-  padding:10px 12px !important;
-  border-radius:15px !important;
-  box-sizing:border-box !important;
-}
-#dayControlsDetails{width:100% !important;margin:0 !important;}
-#dayControlsDetails > summary{
-  width:100% !important;
+#timelineDetails > summary,
+#syncDetails > summary,
+#savedDaysDetails > summary {
   min-height:52px !important;
-  height:auto !important;
-  margin:0 !important;
-  padding:10px 13px !important;
+  height:52px !important;
+  padding:0 12px !important;
+  font-size:16px !important;
   border-radius:13px !important;
-  box-sizing:border-box !important;
 }
-#dayControlsDetails > .section-collapse-body{padding:10px 2px 4px !important;}
-@media(max-width:700px){
-  #dayControlsCard{padding:10px 12px !important;}
-  #dayControlsDetails > summary{
-    min-height:52px !important;
-    height:52px !important;
-    padding:10px 13px !important;
-    border-radius:13px !important;
-  }
+#timelineDetails > summary .timeline-toggle-text,
+#syncDetails > summary .section-toggle-text,
+#savedDaysDetails > summary .section-toggle-text {
+  font-size:11px !important;
+}
+#timelineDetails > summary::after,
+#syncDetails > summary::after,
+#savedDaysDetails > summary::after {
+  font-size:18px !important;
+}
+@media (max-width:700px){
+  #mobileBottomNav{grid-template-columns:repeat(3,1fr) !important;}
 }
 </style>
 </head>
-<!-- Daily Dairy v119: visible Hours and Hours & Overtime Reports UI removed; background calculations retained. -->
 <body>
 <!-- Daily Dairy v101: Stage 2 + Day Controls / Client Information + reusable client contact/location; signature capture implementation unchanged -->
 
@@ -5114,8 +4913,26 @@ td,th{border-color:#3b4448 !important;}
       </div>
 
       <div>
+        <label for="savedSiteSelect">Existing Sites</label>
+        <select id="savedSiteSelect" onchange="diaryChooseSite(this.value)"><option value="">Select saved site / New site</option></select>
+        <button type="button" class="small danger" onclick="diaryDeleteSite()">Remove Selected Site</button>
+      </div>
+      <div>
         <label>Site Name</label>
-        <input id="siteName">
+        <input id="siteName" oninput="diarySiteTyped()">
+      </div>
+      <div>
+        <label for="setupClientSelect">Client Contact</label>
+        <select id="setupClientSelect" onchange="diaryChooseSetupContact(this.value)"><option value="">Add New Client</option></select>
+        <button type="button" class="small danger" onclick="diaryDeleteContact(false)">Remove Selected Client</button>
+      </div>
+      <div id="setupClientFields">
+        <label for="setupClientName">Client Name</label>
+        <input id="setupClientName" placeholder="Client representative">
+        <label for="setupClientPhone">Cell Number</label>
+        <input id="setupClientPhone" type="tel" placeholder="Cell number">
+        <label for="setupClientEmail">Email Address</label>
+        <input id="setupClientEmail" type="email" placeholder="Email address">
       </div>
       <input id="clientRepresentative" type="hidden" value="">
       <div>
@@ -5175,7 +4992,8 @@ td,th{border-color:#3b4448 !important;}
         <option>Eduann</option>
         <option>Edrich</option>
         <option>Albert</option>
-        <option>Steve</option>
+        <option>Steve H</option>
+        <option>Steven</option>
         <option>Jaco M</option>
       </select>
       <input id="technicianArrivalTime" type="time" aria-label="Technician arrival time">
@@ -5297,7 +5115,8 @@ td,th{border-color:#3b4448 !important;}
           <option>Eduann</option>
           <option>Edrich</option>
           <option>Albert</option>
-          <option>Steve</option>
+          <option>Steve H</option>
+        <option>Steven</option>
           <option>Jaco M</option>
         </select>
         <input id="activeTechnicianArrivalTime" type="time" aria-label="Arrival time">
@@ -5322,6 +5141,8 @@ td,th{border-color:#3b4448 !important;}
         <button onclick="travelEvent('Arrived Workshop')"><span class="action-icon">🛠️</span><span class="action-label">Arrived Workshop</span></button>
         <button onclick="travelEvent('Driving Home')"><span class="action-icon">🚘</span><span class="action-label">Driving Home</span></button>
         <button onclick="travelEvent('Arrived Home')"><span class="action-icon">🏠</span><span class="action-label">Arrived Home</span></button>
+        <button onclick="travelEvent('Driving to Lodge')"><span class="action-icon">🚗</span><span class="action-label">Driving to Lodge</span></button>
+        <button onclick="travelEvent('Arrived at Lodge')"><span class="action-icon">🏨</span><span class="action-label">Arrived at Lodge</span></button>
         <button onclick="quickEvent('Collecting Spares')"><span class="action-icon">📦</span><span class="action-label">Collecting Spares</span></button>
         <button onclick="quickEvent('Spares Collected')"><span class="action-icon">✅</span><span class="action-label">Spares Collected</span></button>
       </div>
@@ -5331,7 +5152,9 @@ td,th{border-color:#3b4448 !important;}
       <div class="mobile-section-title">On site</div>
       <h3>Work Actions</h3>
       <div class="grid">
+        <button onclick="quickEvent('Waiting for Permit')"><span class="action-icon">⏳</span><span class="action-label">Waiting for Permit</span></button>
         <button onclick="quickEvent('Permit Received')"><span class="action-icon">📋</span><span class="action-label">Permit Received</span></button>
+        <button type="button" id="endWorkDayAction" onclick="endDay()"><span class="action-icon">🏁</span><span class="action-label">End Work Day</span></button>
       </div>
     </div>
 
@@ -5339,36 +5162,7 @@ td,th{border-color:#3b4448 !important;}
     <div class="card no-print" id="workExecutedCard">
       <h3>Work Executed</h3>
 
-      <details class="work-category">
-        <summary>🔧 MECHANICAL</summary>
-        <div class="work-category-items">
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical – Gas: Gas pipework installed', this, 'What / where? e.g. burner inlet to gas train')">🔥 Gas – Install</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical – Gas: Gas pipework / equipment removed', this, 'What / where was removed?')">🔥 Gas – Remove</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical – Oil: Oil pipework installed', this, 'What / where? Diesel or paraffin if relevant')">🛢️ Oil – Install</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical – Oil: Oil pipework / equipment removed', this, 'What / where was removed?')">🛢️ Oil – Remove</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical – Gas: Gas train / associated equipment installed', this, 'Equipment / location (optional)')">⚙️ Gas Train</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical: Burner mounted / installed', this, 'Burner / location (optional)')">🔥 Burner</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical: Pipe supports / steelwork installed', this, 'What / where? (optional)')">🔩 Supports</button>
-          <button type="button" onclick="selectDetailedWorkExecuted('Mechanical: Equipment offloaded', this, 'Equipment (optional)')">📦 Offloading</button>
-        </div>
-      </details>
-
-      <details class="work-category">
-        <summary>⚡ ELECTRICAL</summary>
-        <div class="work-category-items">
-          <button type="button" onclick="selectWorkExecuted('Electrical Panel & Cable Tray Installation', this)">Electrical Panel & Cable Tray Installation</button>
-          <button type="button" onclick="selectWorkExecuted('Remove Electrical Equipment', this)">Remove Electrical Equipment</button>
-          <button type="button" onclick="selectWorkExecuted('Cables Pulled from Control Panel to Equipment', this)">Cables Pulled from Control Panel to Equipment</button>
-          <button type="button" onclick="selectWorkExecuted('Field Equipment & Control Panel Terminations', this)">Field Equipment & Control Panel Terminations</button>
-        </div>
-      </details>
-
-      <details class="work-category">
-        <summary>⚙️ COMMISSIONING</summary>
-        <div class="work-category-items">
-          <button type="button" onclick="selectWorkExecuted('Burner & System Commissioning', this)">Burner & System Commissioning</button>
-        </div>
-      </details>
+<details class="work-category"><summary>🔧 MECHANICAL</summary><div class="work-category-items"><button type="button" onclick="selectWorkExecuted(&quot;Equipment Offloading&quot;, this)">Equipment Offloading</button><button type="button" onclick="selectWorkExecuted(&quot;Burner Mounting &amp; Installation&quot;, this)">Burner Mounting &amp; Installation</button><details class="work-subgroup"><summary>Gas train</summary><div><button type="button" onclick="selectWorkExecuted(&quot;Install gas train brackets&quot;, this)">Install gas train brackets</button><button type="button" onclick="selectWorkExecuted(&quot;Install gas train&quot;, this)">Install gas train</button><button type="button" onclick="selectWorkExecuted(&quot;Assemble gas train and install&quot;, this)">Assemble gas train and install</button><button type="button" onclick="selectWorkExecuted(&quot;Fabricate gas train and install&quot;, this)">Fabricate gas train and install</button><button type="button" onclick="selectWorkExecuted(&quot;Paint gas train&quot;, this)">Paint gas train</button></div></details><details class="work-subgroup"><summary>Oil train</summary><div><button type="button" onclick="selectWorkExecuted(&quot;Install oil train brackets&quot;, this)">Install oil train brackets</button><button type="button" onclick="selectWorkExecuted(&quot;Install oil train&quot;, this)">Install oil train</button><button type="button" onclick="selectWorkExecuted(&quot;Assemble oil train and install&quot;, this)">Assemble oil train and install</button><button type="button" onclick="selectWorkExecuted(&quot;Fabricate oil train and install&quot;, this)">Fabricate oil train and install</button><button type="button" onclick="selectWorkExecuted(&quot;Paint oil train&quot;, this)">Paint oil train</button></div></details><details class="work-subgroup"><summary>Air train</summary><div><button type="button" onclick="selectWorkExecuted(&quot;Install air train brackets&quot;, this)">Install air train brackets</button><button type="button" onclick="selectWorkExecuted(&quot;Install air train&quot;, this)">Install air train</button><button type="button" onclick="selectWorkExecuted(&quot;Assemble air train and install&quot;, this)">Assemble air train and install</button><button type="button" onclick="selectWorkExecuted(&quot;Fabricate air train and install&quot;, this)">Fabricate air train and install</button><button type="button" onclick="selectWorkExecuted(&quot;Paint air train&quot;, this)">Paint air train</button><button type="button" onclick="selectWorkExecuted(&quot;Install combustion fan&quot;, this)">Install combustion fan</button></div></details></div></details><details class="work-category"><summary>⚡ ELECTRICAL</summary><div class="work-category-items"><button type="button" onclick="selectWorkExecuted(&quot;Electrical Panel &amp; Cable Tray Installation&quot;, this)">Electrical Panel &amp; Cable Tray Installation</button><button type="button" onclick="selectWorkExecuted(&quot;Cables Pulled from Control Panel to Equipment&quot;, this)">Cables Pulled from Control Panel to Equipment</button><button type="button" onclick="selectWorkExecuted(&quot;Field Equipment &amp; Control Panel Terminations&quot;, this)">Field Equipment &amp; Control Panel Terminations</button></div></details><details class="work-category"><summary>🛠 REMOVE EQUIPMENT</summary><div class="work-category-items"><details class="work-subgroup"><summary>Mechanical</summary><div><button type="button" onclick="selectWorkExecuted(&quot;Remove gas train&quot;, this)">Remove gas train</button><button type="button" onclick="selectWorkExecuted(&quot;Remove oil train&quot;, this)">Remove oil train</button><button type="button" onclick="selectWorkExecuted(&quot;Remove air train&quot;, this)">Remove air train</button><button type="button" onclick="selectWorkExecuted(&quot;Remove burner&quot;, this)">Remove burner</button><button type="button" onclick="selectWorkExecuted(&quot;Remove combustion fan&quot;, this)">Remove combustion fan</button><button type="button" onclick="selectWorkExecuted(&quot;Remove pipes&quot;, this)">Remove pipes</button><button type="button" onclick="selectWorkExecuted(&quot;Remove brackets&quot;, this)">Remove brackets</button><button type="button" onclick="selectWorkExecuted(&quot;Remove other mechanical equipment&quot;, this)">Remove other mechanical equipment</button></div></details><details class="work-subgroup"><summary>Electrical</summary><div><button type="button" onclick="selectWorkExecuted(&quot;Remove panel&quot;, this)">Remove panel</button><button type="button" onclick="selectWorkExecuted(&quot;Remove cables&quot;, this)">Remove cables</button><button type="button" onclick="selectWorkExecuted(&quot;Remove cable tray&quot;, this)">Remove cable tray</button><button type="button" onclick="selectWorkExecuted(&quot;Remove field equipment&quot;, this)">Remove field equipment</button><button type="button" onclick="selectWorkExecuted(&quot;Remove other electrical equipment&quot;, this)">Remove other electrical equipment</button></div></details></div></details><details class="work-category"><summary>⚙️ COMMISSIONING</summary><div class="work-category-items"><button type="button" onclick="selectWorkExecuted(&quot;Burner &amp; System Commissioning&quot;, this)">Burner &amp; System Commissioning</button><button type="button" onclick="selectWorkExecuted(&quot;Programming BMS&quot;, this)">Programming BMS</button></div></details><details class="work-category"><summary>📋 ADMIN</summary><div class="work-category-items"><button type="button" onclick="selectWorkExecuted(&quot;Prepare diary / work report&quot;, this)">Prepare diary / work report</button><button type="button" onclick="selectWorkExecuted(&quot;Update documentation&quot;, this)">Update documentation</button><button type="button" onclick="selectWorkExecuted(&quot;Parts / materials follow-up&quot;, this)">Parts / materials follow-up</button><button type="button" onclick="selectWorkExecuted(&quot;Quotation follow-up&quot;, this)">Quotation follow-up</button><button type="button" onclick="selectWorkExecuted(&quot;Client communication&quot;, this)">Client communication</button><button type="button" onclick="selectWorkExecuted(&quot;Planning / scheduling&quot;, this)">Planning / scheduling</button><button type="button" onclick="selectWorkExecuted(&quot;Technical research / training&quot;, this)">Technical research / training</button><button type="button" onclick="selectWorkExecuted(&quot;Other admin&quot;, this)">Other admin</button></div></details>
       <div class="muted" style="margin-top:8px">Tap an item to add it instantly to Work Executed.</div>
 </div>
 
@@ -5376,7 +5170,6 @@ td,th{border-color:#3b4448 !important;}
 <details id="delayDetails" class="section-collapse"><summary><span>Add Delay</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body">
       
       <select id="delayReason">
-        <option>Waiting for Permit</option>
         <option>Evacuation Request</option>
         <option>Power Outage</option>
         <option>No Power</option>
@@ -5391,9 +5184,10 @@ td,th{border-color:#3b4448 !important;}
         <option>Technical Problem</option>
         <option>Other</option>
       </select>
+<label for="delayNotes132">Notes (optional)</label><textarea id="delayNotes132" rows="2" placeholder="Details about this delay"></textarea>
 <div class="row">
-        <button onclick="addDelay()">Add Delay</button>
-        <button onclick="quickEvent('Work Resumed')">Delay Ended / Work Resumed</button>
+        <button onclick="addDelay()">Start Delay</button>
+        <span class="muted">Finish each delay in the Daily Timeline.</span>
       </div>
     </div></details>
 </div>
@@ -5407,25 +5201,7 @@ td,th{border-color:#3b4448 !important;}
       <div class="compact-access-grid">
         <div class="compact-access-field">
           <label>Personnel</label>
-          <select id="accessIssuePerson">
-            <option value="">Select Personnel</option>
-            <option>Clifford</option>
-            <option>Herman</option>
-            <option>Jeto</option>
-            <option>Thabang</option>
-            <option>Modise</option>
-            <option>Scarra</option>
-            <option>McDuff</option>
-            <option>Edward</option>
-            <option>Gus</option>
-            <option>Rodwin</option>
-            <option>Ruve</option>
-            <option>Eduann</option>
-            <option>Edrich</option>
-            <option>Albert</option>
-            <option>Steve</option>
-            <option>Jaco M</option>
-          </select>
+          <select id="accessIssuePerson"><option value="">Select Personnel</option></select>
         </div>
 
         <div class="compact-access-field">
@@ -5465,6 +5241,42 @@ td,th{border-color:#3b4448 !important;}
     </div>
 
 
+    <div class="card" id="hoursCard">
+      <details id="hoursDetails" class="section-collapse">
+        <summary><span>Hours</span><span class="section-toggle-text">Tap to open</span></summary>
+        <div class="section-collapse-body">
+          <div id="hoursSummary"></div>
+        </div>
+      </details>
+    </div>
+
+
+    <div class="card no-print hours-report-card" id="hoursReportsCard">
+      <details id="hoursReportsDetails" class="section-collapse">
+        <summary><span>Hours & Overtime Reports</span><span class="section-toggle-text">Tap to open</span></summary>
+        <div class="section-collapse-body">
+          <div class="hours-report-note">Completed work days are automatically added to the Master Hours ledger. If a completed diary is edited later, the ledger is refreshed from the latest saved diary data.</div>
+          <div class="hours-report-grid">
+            <div>
+              <label for="overtimePeriodEnd">Overtime period ending</label>
+              <input id="overtimePeriodEnd" type="date" onchange="refreshHoursReportPreview()">
+            </div>
+            <div>
+              <label for="hoursProjectFilter">Project filter</label>
+              <select id="hoursProjectFilter" onchange="refreshHoursReportPreview()"><option value="">All Projects</option></select>
+            </div>
+          </div>
+          <div id="hoursReportPeriodLabel" class="muted hours-period-label"></div>
+          <div id="hoursReportPreview" class="hours-report-preview"></div>
+          <div class="hours-report-actions">
+            <button type="button" class="primary" onclick="exportMasterHoursExcel()">📊 Export Master Hours Excel</button>
+            <button type="button" onclick="exportOvertimeWordReport()">📄 Export Overtime Word Report</button>
+          </div>
+          <div class="muted" style="margin-top:8px">Excel contains Master Hours, Project Summary, Overtime Periods and Event Audit sheets. The Word report uses the selected 16th-to-15th overtime period.</div>
+        </div>
+      </details>
+    </div>
+
     <div class="card no-print toolbox-talk-card hidden" id="toolboxTalkCard">
       <details id="toolboxTalkDetails" class="section-collapse">
         <summary><span>Toolbox Talks</span><span id="toolboxTalkSummaryStatus" class="section-toggle-text">Ready</span></summary>
@@ -5499,8 +5311,11 @@ td,th{border-color:#3b4448 !important;}
       </details>
     </div>
 
-    <div id="dayControlsCard" class="card no-print">
-<details id="dayControlsDetails" class="section-collapse"><summary><span>Day Controls / Client Information</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body">
+    <div class="card no-print">
+<details id="clientInfoDetails" class="section-collapse"><summary><span>Client Info</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body">
+      <label for="dayClientSelect">Saved Client Contact</label>
+      <select id="dayClientSelect" onchange="diaryChooseDayContact(this.value)"><option value="">Add New Client</option></select>
+      <button type="button" class="small danger" onclick="diaryDeleteContact(true)">Remove Selected Client</button>
       <div class="client-info-grid">
         <div>
           <label for="clientRepresentativeDayInput">Client Representative</label>
@@ -5508,7 +5323,7 @@ td,th{border-color:#3b4448 !important;}
         </div>
         <div>
           <label for="clientPhoneInput">Client Cell Number</label>
-          <input id="clientPhoneInput" type="tel" inputmode="tel" autocomplete="tel" placeholder="Optional" onchange="saveClientInformationFields()">
+          <input id="clientPhoneInput" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter cellphone number" onchange="saveClientInformationFields()">
         </div>
       </div>
       <div class="client-email-control">
@@ -5534,7 +5349,12 @@ td,th{border-color:#3b4448 !important;}
       </div>
       <div class="grid">
         <button type="button" id="clientSignatureButton" class="primary client-signature-button" onclick="openClientSignatureModal()">✍ Client Signature</button>
-        <button class="primary" onclick="endDay()">End Work Day</button>
+      </div>
+    </div></details>
+</div>
+<div class="card no-print">
+<details id="dayControlsDetails" class="section-collapse"><summary><span>Day Controls</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body">
+      <div class="grid">
         <button onclick="openDiaryManager('pdf')">Daily Diaries</button>
         <button onclick="openDiaryManager('csv')">Excel Report</button>
         <button onclick="newBlankDay()">Start Another Day</button>
@@ -5544,7 +5364,7 @@ td,th{border-color:#3b4448 !important;}
   </div>
 
 
-  <div class="card no-print">
+  <div class="card no-print" id="syncCard">
 <details id="syncDetails" class="section-collapse"><summary><span>Sync / Transfer Data</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body">
     
     <div class="muted">
@@ -5576,7 +5396,7 @@ td,th{border-color:#3b4448 !important;}
   </div></details>
 </div>
 
-  <div class="card no-print">
+  <div class="card no-print" id="savedDaysCard">
 <details id="savedDaysDetails" class="section-collapse"><summary><span>Saved Work Days</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body">
     
     <button id="undoDeleteButton" class="hidden" onclick="undoLastDeletedDay()">Undo Last Delete</button>
@@ -5682,6 +5502,23 @@ function renderSelectedTechnicians(){
   }).join('');
 }
 
+// All event personnel come from the current diary roster, not the master add-person list.
+function diaryAssignedPersonnel(day){
+ const source=Array.isArray(day?.techniciansList)?day.techniciansList:String(day?.technicians||'').split(',');
+ const seen=new Set();return source.map(n=>String(n||'').trim()).filter(n=>{const key=n.toLocaleLowerCase();if(!key||seen.has(key))return false;seen.add(key);return true;});
+}
+function syncDiaryPersonnelSelectors(){
+ const names=diaryAssignedPersonnel(typeof currentDay==='undefined'?null:currentDay);
+ document.querySelectorAll('select[data-diary-personnel],#accessIssuePerson').forEach(select=>{
+   const value=select.value,options=[...select.options];
+   const oldPrompt=options.find(o=>o.value==='')?.textContent||'Select Personnel';
+   if(options.length===names.length+1&&names.every((name,i)=>options[i+1]?.value===name))return;
+   select.replaceChildren(new Option(oldPrompt,''));names.forEach(name=>select.add(new Option(name,name)));
+   select.value=names.includes(value)?value:'';
+   select.dispatchEvent(new Event('change',{bubbles:true}));
+ });
+}
+
 function ensureTechnicianArrivalData(day){
   if(!day) return;
   day.techniciansList=Array.isArray(day.techniciansList)
@@ -5704,6 +5541,7 @@ function renderActiveTechnicians(){
   if(!box || !currentDay) return;
 
   ensureTechnicianArrivalData(currentDay);
+  syncDiaryPersonnelSelectors();
   box.innerHTML=currentDay.techniciansList.map(name=>{
     const time=arrivalTimeValueFor(name,currentDay) || '--:--';
     return `<div class="active-tech-item">
@@ -5827,12 +5665,8 @@ function canonicalWorkDayStartISO(day){
   }
 
   // If genuine activity happened before 07:30, the work day started at that real early time.
-  const early=realEvents.find(e=>{
-    const t=new Date(e.timestamp);
-    return t.getFullYear()===y && t.getMonth()===m && t.getDate()===d &&
-           ((t.getHours()*60)+t.getMinutes()) < 450;
-  });
-  if(early) return early.timestamp;
+  const early=[day.startTimestamp,startEvent?.timestamp,realEvents[0]?.timestamp,...realEvents.map(e=>e.timestamp)].filter(Boolean).map(v=>new Date(v)).filter(t=>t.getFullYear()===y && t.getMonth()===m && t.getDate()===d && t.getHours()*60+t.getMinutes()<450).sort((a,b)=>a-b)[0];
+  if(early)return early.toISOString();
 
   // Otherwise Monday-Friday always begins at 07:30, regardless of first travel/site event.
   return new Date(y,m,d,7,30,0,0).toISOString();
@@ -6102,18 +5936,6 @@ function selectWorkExecuted(value, btn){
   if(section) section.removeAttribute('open');
 }
 
-function selectDetailedWorkExecuted(baseDescription, btn, detailPrompt){
-  if(!currentDay) return;
-  const detail = window.prompt(detailPrompt || 'Add a short detail (optional):', '');
-  if(detail === null) return; // cancelled: do not log anything
-  const clean = String(detail || '').trim();
-  const description = clean ? `${baseDescription} – ${clean}` : baseDescription;
-  addEvent('Work Executed', description);
-  updateWorkExecutedChecks();
-  const section = btn ? btn.closest('details.work-category') : null;
-  if(section) section.removeAttribute('open');
-}
-
 
 
 function updateWorkExecutedChecks(){
@@ -6156,15 +5978,18 @@ function addWorkDone(){
 }
 function addDelay(){
   const r=document.getElementById('delayReason').value;
-  addEvent('Delay',r);
+  const input=document.getElementById('delayNotes132');
+  addEvent('Delay',r+(input?.value.trim() ? ' — '+input.value.trim() : ''));
+  if(input)input.value='';
 }
 
 function addAccessIssue(){
   const person=document.getElementById('accessIssuePerson')?.value || '';
   const reason=document.getElementById('accessIssueReason')?.value || '';
 
-  if(!person){
-    alert('Please select the personnel member.');
+  if(!person || !diaryAssignedPersonnel(currentDay).includes(person)){
+    syncDiaryPersonnelSelectors();
+    alert('Please select a person assigned to this diary. Add them to Personnel on Site first if needed.');
     return;
   }
   if(!reason){
@@ -6188,13 +6013,14 @@ function addNote(){
 }
 function addEvent(type,description){
   if(!currentDay) return;
-  currentDay.events.push({id:Date.now(), timestamp:nowISO(), type, description});
-  persistCurrent();
-  renderDay();
-  appGoTop();
+  let eventId=Date.now();while(currentDay.events.some(e=>String(e.id)===String(eventId)))eventId++;
+  currentDay.events.push({id:eventId, timestamp:nowISO(), type, description,...(['Delay','Waiting for Permit'].includes(type)?{independentlyTimed:true}:{})});
+  try{persistCurrent();}finally{renderDay();}
+  document.getElementById('timelineDetails').open=true;
 }
 const DAILY_DIARY_WORK_EMAIL='clifford@combustion.co.za';
 const DAILY_DIARY_BACKUP_EMAIL='cliffordaikmantcg@gmail.com';
+const DAILY_DIARY_SENDER_EMAIL='cliffordaikmantcg@gmail.com';
 
 function validDailyDiaryEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || '').trim());
@@ -6223,9 +6049,9 @@ function endDay(){
   const clientEmailInput=document.getElementById('clientEmailInput');
   const clientEmail=String(clientEmailInput ? clientEmailInput.value : (currentDay.clientEmail || '')).trim();
   if(!validDailyDiaryEmail(clientEmail)){
-    alert('Please enter a valid Client Email Address before ending the work day.');
+    alert('Please enter a valid Client Email Address before emailing the diary.');
     if(clientEmailInput){
-      try{ document.getElementById('dayControlsDetails').open=true; }catch(e){}
+      try{ document.getElementById('clientInfoDetails').open=true; }catch(e){}
       clientEmailInput.focus();
     }
     return;
@@ -6333,7 +6159,7 @@ function saveEditedInformation(){
 
 function deleteEvent(id){
   if(!confirm('Delete this event?')) return;
-  currentDay.events=currentDay.events.filter(e=>e.id!==id);
+  currentDay.events=currentDay.events.filter(e=>e.id!==id && !(e.type==='Delay Finished' && String(e.finishedFromEventId)===String(id)));
   syncWorkDayTimesFromTimeline();
   persistCurrent();
   renderDay();
@@ -6388,11 +6214,14 @@ function editEvent(id){
     'Arrived Workshop',
     'Driving Home',
     'Arrived Home',
+    'Driving to Lodge',
+    'Arrived at Lodge',
     'Collecting Spares',
     'Spares Collected',
     'Work Day Started',
     'Work Day Ended',
     'Permit Received',
+    'Waiting for Permit',
     'Planning Started',
     'Planning Ended',
     'Work Started',
@@ -6656,17 +6485,17 @@ function minsText(m){
 
 
 
-const MECHANICAL_WORK_ITEMS = new Set([
+const MECHANICAL_WORK_ITEMS = new Set(["Equipment Offloading","Burner Mounting & Installation","Install gas train brackets","Install gas train","Assemble gas train and install","Fabricate gas train and install","Paint gas train","Install oil train brackets","Install oil train","Assemble oil train and install","Fabricate oil train and install","Paint oil train","Install air train brackets","Install air train","Assemble air train and install","Fabricate air train and install","Paint air train","Install combustion fan",
   'Equipment Offloading','Equipment Installation','Steelwork Fabrication','Support Fabrication',
   'Gas Train Installation','Burner Mounting','Burner Installation','Pipework Fabrication',
   'Pipework Installation','Pipe Supports Installation','Remove Pipe Equipment'
 ]);
-const ELECTRICAL_WORK_ITEMS = new Set([
+const ELECTRICAL_WORK_ITEMS = new Set(["Electrical Panel & Cable Tray Installation","Cables Pulled from Control Panel to Equipment","Field Equipment & Control Panel Terminations",
   'Electrical Panel Installation','Cable Tray Installation','Cable Installation','Electrical Wiring',
   'Field Instrument Installation','Panel Electrical Connection','Control Wiring',
   'PLC / Controls Connection','Remove Electrical Equipment'
 ]);
-const COMMISSIONING_WORK_ITEMS = new Set([
+const COMMISSIONING_WORK_ITEMS = new Set(["Burner & System Commissioning","Programming BMS",
   'Pressure Testing','Leak Testing','Electrical Testing','Loop Checks','Pre-Commissioning',
   'Burner Setup','Cold Commissioning','Hot Commissioning','Combustion Tuning',
   'Client Testing / Witnessing','Snag List Work','Final Inspection',
@@ -6675,10 +6504,52 @@ const COMMISSIONING_WORK_ITEMS = new Set([
 
 function workCategoryForDescription(description){
   const d=String(description || '').trim();
-  if(/^Mechanical/i.test(d) || MECHANICAL_WORK_ITEMS.has(d)) return 'MECHANICAL';
-  if(/^Electrical/i.test(d) || ELECTRICAL_WORK_ITEMS.has(d)) return 'ELECTRICAL';
-  if(/^Commissioning/i.test(d) || COMMISSIONING_WORK_ITEMS.has(d)) return 'COMMISSIONING';
+  if(["Remove gas train", "Remove oil train", "Remove air train", "Remove burner", "Remove combustion fan", "Remove pipes", "Remove brackets", "Remove other mechanical equipment", "Remove panel", "Remove cables", "Remove cable tray", "Remove field equipment", "Remove other electrical equipment"].includes(d)) return 'REMOVE EQUIPMENT';
+  if(["Prepare diary / work report", "Update documentation", "Parts / materials follow-up", "Quotation follow-up", "Client communication", "Planning / scheduling", "Technical research / training", "Other admin"].includes(d)) return 'ADMIN';
+  if(MECHANICAL_WORK_ITEMS.has(d)) return 'MECHANICAL';
+  if(ELECTRICAL_WORK_ITEMS.has(d)) return 'ELECTRICAL';
+  if(COMMISSIONING_WORK_ITEMS.has(d)) return 'COMMISSIONING';
   return '';
+}
+
+// v132: delays are independent timed activities.
+function isDiaryDelay(event){return event && ['Delay','Waiting for Permit'].includes(event.type);}
+function diaryDelayFinish(day,event){
+  const events=day?.events||[];
+  const linked=events.find(e=>e.type==='Delay Finished' && String(e.finishedFromEventId)===String(event.id));
+  if(linked)return linked;
+  if(event.type==='Waiting for Permit'){
+    const startIndex=events.indexOf(event),startTime=new Date(event.timestamp).getTime();
+    const received=events.map((e,index)=>({e,index})).filter(({e,index})=>e.type==='Permit Received' && (new Date(e.timestamp).getTime()>startTime || (new Date(e.timestamp).getTime()===startTime&&index>startIndex))).sort((a,b)=>new Date(a.e.timestamp)-new Date(b.e.timestamp)||a.index-b.index)[0]?.e;
+    if(received)return received;
+  }
+  if(!event.independentlyTimed){
+    const legacy=events.filter(e=>new Date(e.timestamp)>=new Date(event.timestamp) &&
+      (e.type==='Work Resumed'||(event.type==='Waiting for Permit'&&e.type==='Permit Received')))
+      .sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp))[0];
+    if(legacy)return legacy;
+  }
+  return day?.endTimestamp ? {timestamp:day.endTimestamp,dayEnded:true} : null;
+}
+function diaryDelayMinutes(start,end){return Math.max(0,Math.round((new Date(end)-new Date(start))/60000));}
+function diaryDelayDuration(event,finish){return finish ? minsText(diaryDelayMinutes(event.timestamp,finish.timestamp)) : 'In progress';}
+function finishDiaryDelay(id){
+  if(!currentDay)return;
+  const original=currentDay.events.find(e=>String(e.id)===String(id));
+  if(original?.type!=='Delay'||diaryDelayFinish(currentDay,original))return;
+  const timestamp=nowISO();
+  if(new Date(timestamp)<new Date(original.timestamp)){alert('Delay finish cannot be before its start. Please check the start time.');return;}
+  let nextId=Date.now();while(currentDay.events.some(e=>String(e.id)===String(nextId)))nextId++;
+  currentDay.events.push({id:nextId,timestamp,type:'Delay Finished',description:original.description||original.type,finishedFromEventId:original.id});
+  persistCurrent();renderDay();
+}
+function mergedDiaryDelayIntervals(day,cutoff){
+  const intervals=(day.events||[]).filter(isDiaryDelay).map(e=>{
+    const finish=diaryDelayFinish(day,e);return {start:e.timestamp,end:finish?.timestamp||cutoff};
+  }).filter(x=>x.end && new Date(x.end)>new Date(x.start)).sort((a,b)=>new Date(a.start)-new Date(b.start));
+  const merged=[];
+  intervals.forEach(x=>{const last=merged[merged.length-1];if(last&&new Date(x.start)<=new Date(last.end)){if(new Date(x.end)>new Date(last.end))last.end=x.end;}else merged.push({...x});});
+  return merged;
 }
 
 function diaryReportRecords(day){
@@ -6702,7 +6573,13 @@ function diaryReportRecords(day){
   const records=[];
   visible.forEach((e,index)=>{
     // Finish events are represented on the same row as their matching start.
-    if(e.type==='Work Executed Finished') return;
+    if(e.type==='Work Executed Finished' || e.type==='Delay Finished') return;
+
+    if(isDiaryDelay(e)){
+      const finish=diaryDelayFinish(day,e);
+      records.push({start:e.timestamp,end:finish?.timestamp||null,text:`${e.type} - ${e.description||e.type} (${diaryDelayDuration(e,finish)})`});
+      return;
+    }
 
     if(e.type==='Work Executed'){
       const finish=finishByStartId.get(String(e.id));
@@ -6721,7 +6598,7 @@ function diaryReportRecords(day){
     // Normal diary events retain the classic TCG "start / end / event" format.
     let nextStart=null;
     for(let j=index+1;j<visible.length;j++){
-      if(visible[j].type==='Work Executed Finished') continue;
+      if(['Work Executed Finished','Delay Finished'].includes(visible[j].type)) continue;
       nextStart=visible[j].timestamp;
       break;
     }
@@ -6924,13 +6801,17 @@ function renderDay(){
   }).forEach(e=>{
     const div=document.createElement('div');
     div.className='event';
-    const displayType=e.type==='Work Executed Finished' ? 'Work Executed' : e.type;
+    const delayFinish=isDiaryDelay(e)?diaryDelayFinish(currentDay,e):null;
+    const displayType=e.type==='Delay Finished' ? 'Delay Ended' : e.type==='Work Executed Finished' ? 'Work Executed' : e.type;
     const displayDescription=e.type==='Work Executed Finished'
       ? `${e.description || 'Work'} - Finished`
       : e.description;
     div.innerHTML=`<div><span class="eventtime">${fmtTime(e.timestamp)}</span> - <b>${escapeHtml(displayType)}</b></div>
       ${displayDescription?`<div>${escapeHtml(displayDescription)}</div>`:''}
+      ${isDiaryDelay(e)?`<div class="muted">${delayFinish?`Ended ${fmtTime(delayFinish.timestamp)} · ${diaryDelayDuration(e,delayFinish)}`:'In progress'}</div>`:''}
       <div class="no-print" style="margin-top:7px">
+        ${e.type==='Delay'&&!delayFinish?`<button class="small work-finish-btn" onclick="finishDiaryDelay(${e.id})">✓ Finish Delay</button>`:''}
+        ${isDiaryDelay(e)&&delayFinish?'<span class="work-finished-badge">✓ DELAY ENDED</span>':''}
         <button class="small" onclick="editEvent(${e.id})">Edit</button>
         ${e.type==='Work Executed' && !e.finishedFromEventId && !workExecutedEventIsFinished(e.id)
           ? `<button class="small work-finish-btn" onclick="finishWorkExecuted(${e.id})">✓ Finished</button>`
@@ -6978,18 +6859,41 @@ function renderDay(){
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));
 }
-function renderSavedDays(){
-  const days=loadAll().sort((a,b)=>b.date.localeCompare(a.date));
-  const box=document.getElementById('savedDays');
-  if(!days.length){ box.innerHTML='<div class="muted">No saved work days yet.</div>'; return; }
-  box.innerHTML=days.map(d=>`
-    <div class="event">
-      <b>${fmtDate(d.date)} - ${escapeHtml(d.projectNumber)} - ${escapeHtml(d.projectDescription || d.projectName || '')}</b>
-      <div class="muted">${escapeHtml(d.siteName||'')} | ${d.status} | ${d.clientSignatureData ? '✓ Client Signed' : '⚠ Awaiting Client Signature'}</div>
-      <button class="small" onclick="openDay('${d.id}')">Open</button>
-      <button class="small danger" onclick="deleteDay('${d.id}')">Delete</button>
-    </div>`).join('');
+function diarySiteFolderKey(day){
+  return String(day.siteName||'No Site').trim().replace(/\s+/g,' ').toLocaleLowerCase()||'no site';
 }
+function diaryNewestFirst(a,b){
+  return String(b.date||'').localeCompare(String(a.date||'')) || String(b.startTimestamp||b.updatedAt||'').localeCompare(String(a.startTimestamp||a.updatedAt||'')) || String(b.id).localeCompare(String(a.id),undefined,{numeric:true});
+}
+function diarySiteFolders(days){
+  const groups=new Map();
+  days.forEach(d=>{const k=diarySiteFolderKey(d);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(d);});
+  return [...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0],undefined,{numeric:true,sensitivity:'base'})).map(([key,days])=>({key,label:String(days[0].siteName||'No Site').trim().replace(/\s+/g,' '),days:days.sort(diaryNewestFirst)}));
+}
+function selectSiteDiaryRows(button,selected){
+  button.closest('.diary-site-folder').querySelectorAll('.diary-day-check').forEach(cb=>cb.checked=selected);
+  updateDiarySelectedCount();
+}
+
+function renderSavedDays(){
+  const days=loadAll();
+  const box=document.getElementById('savedDays');
+  const opened=new Set([...box.querySelectorAll('details[open]')].map(d=>d.dataset.siteKey));
+  if(!days.length){box.innerHTML='<div class="muted">No saved work days yet.</div>';return;}
+  box.innerHTML=diarySiteFolders(days).map(folder=>`
+    <details class="diary-site-folder" data-site-key="${escapeHtml(folder.key)}" ${opened.has(folder.key)?'open':''}>
+      <summary><span>📁 ${escapeHtml(folder.label)}</span><span class="muted">${folder.days.length} diaries</span></summary>
+      <div class="diary-site-body">${folder.days.map(d=>`
+        <div class="event">
+          <b>${fmtDate(d.date)} — ${escapeHtml(d.projectNumber||'')}</b>
+          <div>${escapeHtml(d.projectDescription||d.projectName||'')}</div>
+          <div class="muted">${escapeHtml(d.status||'')} | ${d.clientSignatureData?'✓ Client Signed':'⚠ Awaiting Client Signature'}</div>
+          <button class="small" onclick="openDay('${escapeHtml(d.id)}')">Open</button>
+          <button class="small danger" onclick="deleteDay('${escapeHtml(d.id)}')">Delete</button>
+        </div>`).join('')}</div>
+    </details>`).join('');
+}
+
 function openDay(id){
   editingWorkDayDetails=false;
   const startBtn=document.getElementById('startDayButton');
@@ -7094,7 +6998,7 @@ function ddV104Sig(day,client=false){
   }
   let date=''; if(day.tcgSignatureAppliedAt){const d=new Date(day.tcgSignatureAppliedAt);date=`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;}
   return `<div class="dd-sig"><div class="dd-sig-title">TCG REPRESENTATIVE SIGNATURE</div>
-    <div class="dd-sig-row"><b>Name:</b><div class="val">Clifford Aikman</div></div>
+    <div class="dd-sig-row"><b>Name:</b><div class="val">Clifford Aikman <img alt="Presenter signature" style="width:65px;height:24px;object-fit:contain;vertical-align:middle" src="${signatures.Clifford?.data||CLIFFORD_SIGNATURE_IMAGE}"></div></div>
     <div class="dd-sig-row signature"><b>Signature:</b><div class="val">${day.tcgSignatureApplied?`<img src="${CLIFFORD_SIGNATURE_IMAGE}">`:''}</div></div>
     <div class="dd-sig-row"><b>Date:</b><div class="val">${date}</div></div>
     <div class="dd-sig-row"><b>Email:</b><div class="val">clifford@combustion.co.za</div></div>
@@ -7108,7 +7012,12 @@ function ddV104Page(day,records,pageIndex,total,internal){
  return `<section class="dd-modern-page">
   <div class="dd-head"><div class="dd-brand"><img src="${DD_V104_LOGO}"></div>
   <div class="dd-title"><h1>DAILY <span>DIARY</span></h1><small>SERVICE &nbsp; | &nbsp; PROJECTS &nbsp; | &nbsp; SUPPORT</small></div>
-  <div class="dd-company"><div><b>TEL</b> 011 452 5060</div><div><b>EMAIL</b> info@combustion.co.za</div><div><b>ADDRESS</b> 28 Mopedi Rd,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sebenza, Edenvale,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Johannesburg</div></div></div>
+  <div class="dd-company">
+   <div class="dd-company-row"><b>PHYSICAL</b><span>28 Mopedi Rd,<br>Sebenza, Edenvale,<br>South Africa</span></div>
+   <div class="dd-company-row"><b>POSTAL</b><span>PO Box 459,<br>Edenvale 1610</span></div>
+   <div class="dd-company-row"><b>TEL</b><span>011 452 5060</span></div>
+   <div class="dd-company-row"><b>EMAIL</b><span>info@combustion.co.za</span></div>
+  </div></div>
   <div class="dd-details">
    <div class="dd-field"><div class="dd-label">Date:</div><div class="dd-value">${ddV104Esc(fmtDate(day.date))}</div></div>
    <div class="dd-field"><div class="dd-label">Project No:</div><div class="dd-value">${ddV104Esc(day.projectNumber||'')}</div></div>
@@ -7296,7 +7205,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 (function(){
   const svg = id => '<svg aria-hidden="true"><use href="#'+id+'"></use></svg>';
-  const travelIds=['i-car','i-pin','i-truck','i-tools','i-car','i-home','i-box','i-checkbox'];
+  const travelIds=['i-car','i-pin','i-truck','i-tools','i-car','i-home','i-car','i-home','i-box','i-checkbox'];
   document.querySelectorAll('#travelCard .grid button .action-icon').forEach((el,i)=>{
     if(travelIds[i]) el.innerHTML=svg(travelIds[i]);
   });
@@ -7386,6 +7295,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   function openSheet(sel){
+    if(sel.matches('select[data-diary-personnel],#accessIssuePerson'))syncDiaryPersonnelSelectors();
     activeSelect=sel;
     titleEl.textContent=titleMap[sel.id] || 'Select Option';
     optionsEl.innerHTML='';
@@ -7432,6 +7342,7 @@ document.addEventListener('DOMContentLoaded', function(){
     sel.addEventListener('change',()=>syncTrigger(sel));
   }
 
+  window.enhanceDiarySelect=enhanceSelect;
   document.querySelectorAll('select[id]').forEach(enhanceSelect);
 
   closeBtn.addEventListener('click',closeSheet);
@@ -7577,22 +7488,19 @@ document.addEventListener('DOMContentLoaded', function(){
     );
 
     itemsBox.innerHTML='';
-    Array.from(source.querySelectorAll('button')).forEach(sourceBtn=>{
-      const label=(sourceBtn.textContent || '').trim();
-      const b=document.createElement('button');
-      b.type='button';
-      b.textContent=label;
+    const clone=source.cloneNode(true);
+    clone.className='';
+    const originals=Array.from(source.querySelectorAll('button'));
+    clone.querySelectorAll('button').forEach((b,i)=>{
+      b.removeAttribute('onclick');
+      const label=(b.textContent||'').trim();
       if(completed.has(label)) b.classList.add('work-done-today');
-
       b.addEventListener('click',()=>{
-        if(typeof selectWorkExecuted==='function'){
-          selectWorkExecuted(label, sourceBtn);
-        }
+        selectWorkExecuted(label, originals[i]);
         closeWorkExecPopup();
       });
-
-      itemsBox.appendChild(b);
     });
+    itemsBox.appendChild(clone);
 
     details.setAttribute('open','');
     popup.setAttribute('aria-hidden','false');
@@ -7788,19 +7696,8 @@ function sameAsPreviousDay(){
 <script>
 let diaryManagerMode='pdf';
 
-function diaryProjectKey(day){
-  return [
-    day.projectNumber || '',
-    day.siteName || '',
-    day.projectDescription || day.projectName || ''
-  ].join('||');
-}
-
-function diaryProjectLabel(day){
-  const site=(day.siteName || 'No Site').trim();
-  const pn=(day.projectNumber || 'No Project').trim();
-  return `${site} — ${pn}`;
-}
+function diaryProjectKey(day){return diarySiteFolderKey(day);}
+function diaryProjectLabel(day){return String(day.siteName||'No Site').trim().replace(/\s+/g,' ');}
 
 function diaryMonthKey(day){
   return String(day.date || '').slice(0,7);
@@ -7823,7 +7720,7 @@ function diaryFilteredDays(){
   return days
     .filter(d => !siteKey || diaryProjectKey(d)===siteKey)
     .filter(d => !monthKey || diaryMonthKey(d)===monthKey)
-    .sort((a,b)=>String(a.date||'').localeCompare(String(b.date||'')));
+    .sort((a,b)=>diarySiteFolderKey(a).localeCompare(diarySiteFolderKey(b),undefined,{numeric:true,sensitivity:'base'}) || diaryNewestFirst(a,b));
 }
 
 function populateDiaryFilters(){
@@ -7878,38 +7775,24 @@ function renderDiaryManager(){
   const list=document.getElementById('diaryManagerList');
   if(!list) return;
 
-  const groups=new Map();
-  days.forEach(d=>{
-    const key=diaryProjectKey(d);
-    if(!groups.has(key)) groups.set(key,[]);
-    groups.get(key).push(d);
-  });
-
+  const opened=new Set([...list.querySelectorAll('details[open]')].map(d=>d.dataset.siteKey));
+  const selected=new Set([...list.querySelectorAll('.diary-day-check:checked')].map(cb=>cb.dataset.dayId));
   if(!days.length){
     list.innerHTML='<div class="muted" style="padding:18px 4px;text-align:center">No tracked work days match this filter.</div>';
   }else{
-    list.innerHTML=[...groups.entries()].map(([key,group])=>{
-      const first=group[0];
-      const printed=group.filter(d=>diaryIsPrinted(d)).length;
-      const open=group.length-printed;
-      return `<div class="diary-job-group">
-        <div class="diary-job-head">
-          <strong>${escapeHtml(diaryProjectLabel(first))}</strong>
-          <span>${group.length} diaries · ${printed} printed · ${open} open</span>
+    list.innerHTML=diarySiteFolders(days).map(folder=>{
+      const group=folder.days,printed=group.filter(diaryIsPrinted).length;
+      return `<details class="diary-job-group diary-site-folder" data-site-key="${escapeHtml(folder.key)}" ${opened.has(folder.key)?'open':''}>
+        <summary><strong>📁 ${escapeHtml(folder.label)}</strong><span>${group.length} diaries · ${printed} printed</span></summary>
+        <div class="diary-site-body">
+          <div class="row diary-site-selection"><button type="button" class="small" onclick="selectSiteDiaryRows(this,true)">Select all in this site</button><button type="button" class="small" onclick="selectSiteDiaryRows(this,false)">Clear site selection</button></div>
+          ${group.map(d=>`<div class="diary-day-row">
+            <input class="diary-day-check" type="checkbox" data-day-id="${escapeHtml(d.id)}" ${selected.has(String(d.id))?'checked':''} onchange="updateDiarySelectedCount()">
+            <div class="diary-day-main"><b>${escapeHtml(typeof fmtDate==='function'?fmtDate(d.date):d.date)} — ${escapeHtml(d.projectNumber||'')}</b><span>${escapeHtml(d.projectDescription||d.projectName||'')}${d.status?' · '+escapeHtml(d.status):''}</span></div>
+            <button type="button" class="diary-day-status ${diaryIsPrinted(d)?'printed':''}" onclick="toggleDiaryPrinted('${escapeHtml(d.id)}')">${diaryIsPrinted(d)?'✓ Printed':'Open'}</button>
+          </div>`).join('')}
         </div>
-        ${group.map(d=>`
-          <div class="diary-day-row">
-            <input class="diary-day-check" type="checkbox" data-day-id="${escapeHtml(d.id)}" onchange="updateDiarySelectedCount()">
-            <div class="diary-day-main">
-              <b>${escapeHtml(typeof fmtDate==='function' ? fmtDate(d.date) : d.date)}</b>
-              <span>${escapeHtml(d.projectDescription || d.projectName || '')}${d.status ? ' · '+escapeHtml(d.status) : ''}</span>
-            </div>
-            <button type="button" class="diary-day-status ${diaryIsPrinted(d)?'printed':''}" onclick="toggleDiaryPrinted('${escapeHtml(d.id)}')">
-              ${diaryIsPrinted(d)?'✓ Printed':'Open'}
-            </button>
-          </div>
-        `).join('')}
-      </div>`;
+      </details>`;
     }).join('');
   }
 
@@ -7971,7 +7854,7 @@ function selectedDiaryDays(){
   const days=(typeof loadAll==='function' ? loadAll() : []);
   return days
     .filter(d=>set.has(String(d.id)))
-    .sort((a,b)=>String(a.date||'').localeCompare(String(b.date||'')));
+    .sort((a,b)=>diarySiteFolderKey(a).localeCompare(diarySiteFolderKey(b),undefined,{numeric:true,sensitivity:'base'}) || diaryNewestFirst(a,b));
 }
 
 
@@ -8323,7 +8206,7 @@ function openClientSignatureModal(){
   if(name) name.value=currentDay.clientSignatureName || currentDay.clientRepresentative || '';
   if(note){
     note.textContent=currentDay.clientSignatureData && currentDay.clientSignatureCapturedAt
-      ? `Existing signature captured ${fmtSignatureStamp(currentDay.clientSignatureCapturedAt)}. Signing again will replace it.`
+      ? `Existing signature captured ${fmtSignatureStamp(currentDay.clientSignatureCapturedAt)}. Updating keeps the previous signature in the evidence backup.`
       : 'Signature date and time will be recorded automatically.';
   }
   modal.classList.remove('hidden');
@@ -8406,7 +8289,8 @@ const DAILY_DIARY_STAGE2_OUTBOX_KEY='dailyDiary_stage2_outbox_v1';
 const DAILY_DIARY_JSPDF_URL='https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js';
 
 function stage2Config(){
-  try{return JSON.parse(localStorage.getItem(DAILY_DIARY_STAGE2_CONFIG_KEY)||'{}')||{};}catch(e){return {};}
+  let c={};try{c=JSON.parse(localStorage.getItem(DAILY_DIARY_STAGE2_CONFIG_KEY)||'{}')||{};}catch(e){}
+  return {...c,url:c.url||'https://script.google.com/macros/s/AKfycbxlODwSxVWfAcAlIbd4y0LrtAqo3klU14fVBln_QV4TL5wlzs4XXxjhXtnr75N-50R3Nw/exec'};
 }
 function stage2Configured(){
   const c=stage2Config();
@@ -8427,7 +8311,7 @@ function saveStage2EmailSettings(){
   localStorage.setItem(DAILY_DIARY_STAGE2_CONFIG_KEY,JSON.stringify({url,secret}));
   if(status) status.textContent='✓ Stage 2 email service saved on this device.';
   if(currentDay) renderStage2EmailStatus(currentDay);
-  processStage2Outbox(false);
+  // Use Test Email Service before explicitly retrying queued diaries.
 }
 function loadStage2SettingsIntoUI(){
   const c=stage2Config();
@@ -8447,9 +8331,9 @@ async function testStage2EmailService(){
   const c=stage2Config();
   if(status) status.textContent='Testing email service...';
   try{
-    const r=await fetch(c.url,{method:'GET',headers:{'x-daily-diary-secret':c.secret}});
-    const data=await r.json().catch(()=>({}));
-    if(!r.ok) throw new Error(data.error||('HTTP '+r.status));
+    const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({action:'test',secret:c.secret}),redirect:'follow'});
+    const data=await r.json();
+    if(!r.ok || data.ok!==true) throw new Error(data.error||('Connection could not be verified. HTTP '+r.status));
     if(status) status.textContent='✓ Email service connected.';
   }catch(err){
     if(status) status.textContent='Email service test failed: '+String(err.message||err);
@@ -8499,26 +8383,26 @@ function renderStage2EmailStatus(day){
   }else if(day.status==='Completed' && day.emailReadyForSending){
     el.textContent=stage2Configured() ? 'Ready for automatic email delivery.' : 'Stage 2 email service not configured on this device.';
   }else{
-    el.textContent=stage2Configured() ? 'Automatic email will send when End Work Day is pressed.' : 'Stage 2 email service not configured.';
+    el.textContent=stage2Configured() ? 'Email will send when Email Daily Dairy to Client is pressed.' : 'Stage 2 email service not configured.';
   }
 }
 
+const diaryScriptLoads143=new Map();
 function loadStage2Script(src){
-  return new Promise((resolve,reject)=>{
-    if(window.jspdf?.jsPDF) return resolve();
+  const ready=()=>/html2canvas/i.test(src)?typeof window.html2canvas==='function':/jspdf/i.test(src)?!!window.jspdf?.jsPDF:false;
+  if(ready())return Promise.resolve();
+  if(diaryScriptLoads143.has(src))return diaryScriptLoads143.get(src);
+  const promise=new Promise((resolve,reject)=>{
     const existing=document.querySelector(`script[src="${src}"]`);
-    if(existing){
-      existing.addEventListener('load',()=>resolve(),{once:true});
-      existing.addEventListener('error',()=>reject(new Error('Could not load PDF library.')),{once:true});
-      return;
-    }
-    const sc=document.createElement('script');
-    sc.src=src;
-    sc.async=true;
-    sc.onload=()=>resolve();
-    sc.onerror=()=>reject(new Error('Could not load PDF library.'));
-    document.head.appendChild(sc);
+    const sc=existing||document.createElement('script');
+    const loaded=()=>{if(ready())resolve();else failed();};
+    const failed=()=>{diaryScriptLoads143.delete(src);sc.remove();reject(new Error('Could not load '+(/html2canvas/i.test(src)?'the colour capture library':'the PDF library')+'. Check the internet connection and try again.'));};
+    sc.addEventListener('load',loaded,{once:true});
+    sc.addEventListener('error',failed,{once:true});
+    if(!existing){sc.src=src;sc.async=true;document.head.appendChild(sc);}
   });
+  diaryScriptLoads143.set(src,promise);
+  return promise;
 }
 function stage2SafeText(v){return String(v??'').replace(/[\u2013\u2014]/g,'-').replace(/\u2022/g,'-');}
 function stage2ImageFormat(data){return /^data:image\/jpe?g/i.test(data||'') ? 'JPEG' : 'PNG';}
@@ -8526,22 +8410,30 @@ function stage2Technicians(day){
   return (day.techniciansList||['Clifford']).join(', ');
 }
 function stage2EmailBody(day){
-  const rep=String(day.clientRepresentative||'').trim();
-  return [
-    rep ? `Good day ${rep},` : 'Good day,',
-    '',
-    'Please find attached the completed Daily Diary for today.',
-    '',
-    `Project: ${day.projectNumber||''}`,
-    `Site: ${day.siteName||''}`,
-    `Date: ${day.date ? fmtDate(day.date) : ''}`,
-    '',
-    'Kind regards,',
-    'Clifford Aikman',
-    'The Combustion Group (Pty) Ltd',
-    DAILY_DIARY_WORK_EMAIL,
-    '073 206 8575'
+  const name=String(day.clientRepresentative||'').trim();
+  return [name ? `Good day ${name}` : 'Good day', '',
+    `Kindly find today's (${day.date?fmtDate(day.date):''}) Daily Dairy attached.`, '',
+    'Regards/Groete','', 'Clifford Aikman','Service Technician','',
+    'Physical Address: 28 Mopedi Rd, Sebenza, Edenvale, South Africa',
+    'Postal Address: PO Box 459, Edenvale 1610, South Africa',
+    'Phone: +27 (0) 11 452 5060','Mobile: +27 73 206 8575',
+    'Email: clifford@combustion.co.za','Website: www.thecombustiongroup.co.za','',
+    'Disclaimer:', "As we aim to comply with the Protection of Personal Information Act (POPIA) Act 4 of 2013, we herewith advise you that the content of this e-mail and any attachments are confidential. It is intended for the named recipient(s) only. Should you receive this e-mail by mistake, please notify the sender immediately and you are obligated not to disclose the contents to anyone or make copies thereof.", '', "At The Combustion Group we take great pride in protecting the personal information that we hold or process about our clients, employees, vendors and other stakeholders. We are committed to best practice in complying with data protection requirements across our entire operation.", '',
+    'You can read our full POPIA Compliance Statement on our Website'
   ].join('\n');
+}
+function stage2EmailHtml(day){
+  const lines=stage2EmailBody(day).split('\n');
+  return '<div style="font-family:Arial,sans-serif;font-size:14px;color:#222">'+lines.map(line=>{
+    if(line==='Clifford Aikman')return '<b>Clifford Aikman</b><br>';
+    if(line==='Service Technician')return 'Service Technician<br><img src="cid:tcgLogo" alt="The Combustion Group" width="280"><br>';
+    if(line.startsWith('Website:'))return '<b>Website:</b> <a href="https://www.thecombustiongroup.co.za/">www.thecombustiongroup.co.za</a><br>';
+    if(line.startsWith('Email:'))return '<b>Email:</b> <a href="mailto:clifford@combustion.co.za">clifford@combustion.co.za</a><br>';
+    if(line==='Disclaimer:')return '<b>Disclaimer:</b><br>';
+    if(line==="As we aim to comply with the Protection of Personal Information Act (POPIA) Act 4 of 2013, we herewith advise you that the content of this e-mail and any attachments are confidential. It is intended for the named recipient(s) only. Should you receive this e-mail by mistake, please notify the sender immediately and you are obligated not to disclose the contents to anyone or make copies thereof." || line==="At The Combustion Group we take great pride in protecting the personal information that we hold or process about our clients, employees, vendors and other stakeholders. We are committed to best practice in complying with data protection requirements across our entire operation." || line.startsWith('You can read'))return '<i>'+escapeHtml(line)+'</i><br>';
+    if(/^(Physical Address|Postal Address|Phone|Mobile):/.test(line)){const i=line.indexOf(':');return '<b>'+escapeHtml(line.slice(0,i+1))+'</b>'+escapeHtml(line.slice(i+1))+'<br>';}
+    return escapeHtml(line)+'<br>';
+  }).join('')+'</div>';
 }
 
 async function buildDailyDiaryStage2Pdf(day){
@@ -8552,7 +8444,7 @@ async function buildDailyDiaryStage2Pdf(day){
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
   const pageH=297,margin=10,contentW=190;
   const orange=[233,87,10],dark=[41,41,41],light=[230,230,230],black=[20,20,20];
-  const logo=(document.querySelector('.tcg-v99-brand .tcg-logo-img')||document.querySelector('.tcg-logo-img'))?.src||'';
+  const logo=(typeof DD_V104_LOGO!=='undefined' && DD_V104_LOGO) || document.querySelector('.dd-brand img')?.src || '';
   const records=typeof diaryReportRecords==='function' ? diaryReportRecords(day) : [];
   let y=0,pageNo=1;
 
@@ -8580,7 +8472,8 @@ async function buildDailyDiaryStage2Pdf(day){
     doc.setDrawColor(40);
     doc.rect(margin,y,contentW,25);
     doc.line(120,y,120,y+25);
-    if(logo){try{doc.addImage(logo,stage2ImageFormat(logo),13,y+3,82,19,undefined,'FAST');}catch(e){}}
+    // Use the same current TCG banner as the toolbox PDF without stretching it.
+    if(logo){const image=doc.getImageProperties(logo);const h=19,w=Math.min(104,h*image.width/image.height);const fittedH=w*image.height/image.width;doc.addImage(logo,stage2ImageFormat(logo),margin+(110-w)/2,y+(25-fittedH)/2,w,fittedH,undefined,'NONE');}
     let my=y+6;
     write('Reference Number:',124,my,7); write('TCG/SF/DD/001',162,my,7); my+=5;
     write('Implementation Date:',124,my,7); write('01 January 2019',162,my,7); my+=5;
@@ -8687,7 +8580,7 @@ async function buildDailyDiaryStage2Pdf(day){
 
     // Client representative - right
     write('Client Signature',108,y+5,8,'bold');
-    if(day.clientSignatureData){try{doc.addImage(day.clientSignatureData,stage2ImageFormat(day.clientSignatureData),110,y+7,42,13,undefined,'FAST');}catch(e){}}
+    if(day.clientSignatureData){try{doc.addImage(day.clientSignatureData,stage2ImageFormat(day.clientSignatureData),110,y+7,42,13,undefined,'FAST');}catch(e){throw new Error('PDF stopped: the saved client signature could not be included.');}}
     let cy=y+23;
     write(`Name: ${day.clientSignatureName||day.clientRepresentative||''}`,108,cy,7,'normal',88); cy+=4.2;
     if(day.clientSignatureCapturedAt){write(`Signed: ${fmtSignatureStamp(day.clientSignatureCapturedAt)}`,108,cy,7);cy+=4.2;}
@@ -8723,11 +8616,14 @@ function stage2Payload(day,pdfBase64){
   if(!used.has(backupKey)){bcc.push(DAILY_DIARY_BACKUP_EMAIL);used.add(backupKey);}
   return {
     deliveryId:`${day.id}-${day.endTimestamp||day.updatedAt||Date.now()}`,
+    from:DAILY_DIARY_SENDER_EMAIL,
     to:[toEmail],
     cc,
     bcc,
     subject:day.emailSubject||`${day.projectNumber||'No Project'} - ${day.siteName||'No Site'} - ${day.date?fmtDate(day.date):''}`,
     text:stage2EmailBody(day),
+    htmlBody:stage2EmailHtml(day),
+    logoData:(document.querySelector(".tcg-logo-img")?.src||""),
     filename:`Daily_Diary_${String(day.projectNumber||'Project').replace(/[^A-Za-z0-9_-]+/g,'_')}_${String(day.date||'Date')}.pdf`,
     pdfBase64
   };
@@ -8746,11 +8642,12 @@ async function sendDailyDiaryStage2(day){
   const c=stage2Config();
   const r=await fetch(c.url,{
     method:'POST',
-    headers:{'Content-Type':'application/json','x-daily-diary-secret':c.secret},
-    body:JSON.stringify(stage2Payload(day,pdfBase64))
+    headers:{'Content-Type':'text/plain;charset=UTF-8'},
+    redirect:'follow',
+    body:JSON.stringify({...stage2Payload(day,pdfBase64),secret:c.secret})
   });
-  const data=await r.json().catch(()=>({}));
-  if(!r.ok || data.ok===false) throw new Error(data.error||('Email service returned HTTP '+r.status));
+  const data=await r.json();
+  if(!r.ok || data.ok!==true) throw new Error(data.error||('Email service returned HTTP '+r.status));
 
   updateSavedDayEmailDelivery(day.id,{
     emailDeliveryStatus:'Sent',
@@ -9099,11 +8996,12 @@ document.addEventListener('DOMContentLoaded',()=>{
     const end=day.endTimestamp || events.filter(e=>e.type==='Work Day Ended').slice(-1)[0]?.timestamp || '';
     const totalMinutes=intervalMinutes(start,end);
 
-    const travelStarts=['Driving to Site','Driving Workshop','Driving Home','Collecting Spares'];
+    const travelStarts=['Driving to Site','Driving Workshop','Driving Home','Driving to Lodge','Collecting Spares'];
     const travelEnds={
       'Driving to Site':['Arrived at Site'],
       'Driving Workshop':['Arrived Workshop'],
       'Driving Home':['Arrived Home'],
+      'Driving to Lodge':['Arrived at Lodge'],
       'Collecting Spares':['Spares Collected']
     };
     const travelIntervals=eventIntervals(events,travelStarts,travelEnds,end);
@@ -9114,24 +9012,14 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(events[i].type!=='Arrived at Site') continue;
       let leave=null;
       for(let j=i+1;j<events.length;j++){
-        if(['Driving Workshop','Driving Home','Work Day Ended'].includes(events[j].type)){leave=events[j];break;}
+        if(['Driving Workshop','Driving Home','Driving to Lodge','Work Day Ended'].includes(events[j].type)){leave=events[j];break;}
       }
       if(leave) siteIntervals.push({start:events[i].timestamp,end:leave.timestamp});
       else if(end) siteIntervals.push({start:events[i].timestamp,end});
     }
     const sitePresenceMinutes=siteIntervals.reduce((s,x)=>s+intervalMinutes(x.start,x.end),0);
 
-    const delayIntervals=[];
-    for(let i=0;i<events.length;i++){
-      if(events[i].type!=='Delay') continue;
-      let resume=null;
-      for(let j=i+1;j<events.length;j++){
-        if(events[j].type==='Work Resumed'){resume=events[j];break;}
-        if(events[j].type==='Delay') break;
-      }
-      if(resume) delayIntervals.push({start:events[i].timestamp,end:resume.timestamp});
-      else if(end) delayIntervals.push({start:events[i].timestamp,end});
-    }
+    const delayIntervals=mergedDiaryDelayIntervals(day,end||nowISO());
     const delayMinutes=delayIntervals.reduce((s,x)=>s+intervalMinutes(x.start,x.end),0);
     let siteDelayMinutes=0;
     delayIntervals.forEach(d=>siteIntervals.forEach(si=>siteDelayMinutes+=overlapMinutes(d.start,d.end,si.start,si.end)));
@@ -9250,8 +9138,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(!recs.length){alert('No completed work days were found for this overtime period and project filter.');return;}
     const sum=k=>recs.reduce((s,r)=>s+(Number(r[k])||0),0);
     const rows=recs.map(r=>`<tr><td>${wordEscape(displayDate(r.date))}</td><td>${wordEscape(r.projectNumber)}</td><td>${wordEscape(r.siteName)}</td><td>${wordEscape(r.startTime)}</td><td>${wordEscape(r.endTime)}</td><td>${minsToHours(r.totalMinutes).toFixed(2)}</td><td>${minsToHours(r.travelMinutes).toFixed(2)}</td><td>${minsToHours(r.activeSiteMinutes).toFixed(2)}</td><td>${minsToHours(r.delayMinutes).toFixed(2)}</td><td>${r.ot15.toFixed(2)}</td><td>${r.ot2.toFixed(2)}</td><td>${r.totalOT.toFixed(2)}</td></tr>`).join('');
-    const doc=`<!doctype html><html><head><meta charset="utf-8"><title>Overtime Report</title><style>@page{size:A4 landscape;margin:12mm}body{font-family:Arial,sans-serif;color:#111;font-size:10pt}h1{margin:0 0 4px;font-size:18pt}h2{margin:0 0 14px;font-size:11pt;color:#555}.meta{margin-bottom:12px}.meta b{color:#111}table{border-collapse:collapse;width:100%;font-size:8.5pt}th,td{border:1px solid #777;padding:5px;text-align:left}th{background:#222;color:#fff}.total td{font-weight:bold;background:#eee}.note{margin-top:12px;font-size:8.5pt;color:#555}</style>
-</head><body><h1>Overtime & Hours Report</h1><h2>The Combustion Group</h2><div class="meta"><b>Period:</b> ${wordEscape(period.label)} &nbsp;&nbsp; <b>Project:</b> ${wordEscape(project||'All Projects')}</div><table><thead><tr><th>Date</th><th>Project</th><th>Site</th><th>Start</th><th>End</th><th>Total Hrs</th><th>Travel</th><th>Active Site</th><th>Delay</th><th>OT 1.5x</th><th>OT 2.0x</th><th>Total OT</th></tr></thead><tbody>${rows}<tr class="total"><td colspan="5">TOTAL</td><td>${minsToHours(sum('totalMinutes')).toFixed(2)}</td><td>${minsToHours(sum('travelMinutes')).toFixed(2)}</td><td>${minsToHours(sum('activeSiteMinutes')).toFixed(2)}</td><td>${minsToHours(sum('delayMinutes')).toFixed(2)}</td><td>${sum('ot15').toFixed(2)}</td><td>${sum('ot2').toFixed(2)}</td><td>${(sum('ot15')+sum('ot2')).toFixed(2)}</td></tr></tbody></table><div class="note">Period rule: the selected month runs from the 16th of the previous month through the 15th of the selected month. Values are calculated from the latest saved Daily Dairy timestamps.</div>
+    const doc=`<!doctype html><html><head><meta charset="utf-8"><title>Overtime Report</title><style>@page{size:A4 landscape;margin:12mm}body{font-family:Arial,sans-serif;color:#111;font-size:10pt}h1{margin:0 0 4px;font-size:18pt}h2{margin:0 0 14px;font-size:11pt;color:#555}.meta{margin-bottom:12px}.meta b{color:#111}table{border-collapse:collapse;width:100%;font-size:8.5pt}th,td{border:1px solid #777;padding:5px;text-align:left}th{background:#222;color:#fff}.total td{font-weight:bold;background:#eee}.note{margin-top:12px;font-size:8.5pt;color:#555}</style></head><body><h1>Overtime & Hours Report</h1><h2>The Combustion Group</h2><div class="meta"><b>Period:</b> ${wordEscape(period.label)} &nbsp;&nbsp; <b>Project:</b> ${wordEscape(project||'All Projects')}</div><table><thead><tr><th>Date</th><th>Project</th><th>Site</th><th>Start</th><th>End</th><th>Total Hrs</th><th>Travel</th><th>Active Site</th><th>Delay</th><th>OT 1.5x</th><th>OT 2.0x</th><th>Total OT</th></tr></thead><tbody>${rows}<tr class="total"><td colspan="5">TOTAL</td><td>${minsToHours(sum('totalMinutes')).toFixed(2)}</td><td>${minsToHours(sum('travelMinutes')).toFixed(2)}</td><td>${minsToHours(sum('activeSiteMinutes')).toFixed(2)}</td><td>${minsToHours(sum('delayMinutes')).toFixed(2)}</td><td>${sum('ot15').toFixed(2)}</td><td>${sum('ot2').toFixed(2)}</td><td>${(sum('ot15')+sum('ot2')).toFixed(2)}</td></tr></tbody></table><div class="note">Period rule: the selected month runs from the 16th of the previous month through the 15th of the selected month. Values are calculated from the latest saved Daily Dairy timestamps.</div>
+
+
+
+
+
+
+
+
 
 
 </body></html>`;
@@ -9273,6 +9168,211 @@ document.addEventListener('DOMContentLoaded',()=>{
     const end=document.getElementById('overtimePeriodEnd');if(end&&!end.value) end.value=defaultPeriodEnd();
     try{rebuildLedger();populateProjectFilter();refreshHoursReportPreview();}catch(e){console.warn(e);}
   });
+})();
+</script>
+<script id="v113-layout-order">
+(function(){
+  function moveUtilitySections(){
+    const active=document.getElementById('activeDay');
+    const dayControls=document.getElementById('dayControlsDetails')?.closest('.card');
+    const hours=document.getElementById('hoursCard');
+    const reports=document.getElementById('hoursReportsCard');
+    if(active && dayControls){
+      // Keep Toolbox + Day Controls in the primary work area; utilities sit beneath them.
+      if(hours) active.appendChild(hours);
+      if(reports) active.appendChild(reports);
+    }
+
+    const sync=document.getElementById('syncDetails')?.closest('.card');
+    const saved=document.getElementById('savedDaysDetails')?.closest('.card');
+    if(sync && saved && saved.parentNode){
+      // Saved Work Days remains immediately accessible; Sync / Transfer Data becomes the final utility section.
+      saved.parentNode.appendChild(sync);
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',moveUtilitySections);
+  else moveUtilitySections();
+})();
+</script>
+
+
+<script>
+/* v119: Offline site and contact address book, stored on this device. */
+(function(){
+  const KEY='daily_diary_site_contacts_v119';
+  const DELETED='daily_diary_deleted_contacts_v120';
+  function tomb(){try{return JSON.parse(localStorage.getItem(DELETED)||'{"sites":[],"contacts":{}}')}catch(e){return {sites:[],contacts:{}}}}
+  function saveTomb(t){localStorage.setItem(DELETED,JSON.stringify(t));}
+  function contactKey(c){return [norm(c.name),clean(c.phone),norm(c.email)].join('|');}
+  const el=id=>document.getElementById(id);
+  const norm=v=>String(v||'').trim().toLocaleLowerCase().replace(/\s+/g,' ');
+  const clean=v=>String(v||'').trim();
+  function db(){
+    let data={};
+    try{data=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+    // Build entries from existing diary history, without deleting address-book entries.
+    try{
+      (loadAll()||[]).forEach(d=>{
+        const site=clean(d.siteName);if(!site)return;
+        const key=norm(site);
+        const deleted=tomb();
+        if((deleted.sites||[]).includes(key))return;
+        const entry=data[key]||(data[key]={name:site,contacts:[]});
+        const name=clean(d.clientRepresentative),phone=clean(d.clientPhone),email=clean(d.clientEmail);
+        if(name||phone||email){const c={name,phone,email};if(!(deleted.contacts?.[key]||[]).includes(contactKey(c)))upsert(entry,c,false);}
+      });
+    }catch(e){}
+    return data;
+  }
+  function upsert(site,contact,replace){
+    if(!site.contacts)site.contacts=[];
+    if(!contact.name&&!contact.phone&&!contact.email)return;
+    let match=site.contacts.find(c=>
+      (contact.name&&norm(c.name)===norm(contact.name))||
+      (contact.email&&norm(c.email)===norm(contact.email)&&contact.email)||
+      (contact.phone&&clean(c.phone)===clean(contact.phone)&&contact.phone)
+    );
+    if(match){
+      if(replace){Object.assign(match,contact);}
+      else{for(const k of ['name','phone','email'])if(!match[k]&&contact[k])match[k]=contact[k];}
+    }else site.contacts.push({...contact});
+  }
+  function store(siteName,contact){
+    const site=clean(siteName);if(!site)return;
+    const data=db(),key=norm(site);
+    const entry=data[key]||(data[key]={name:site,contacts:[]});
+    const t=tomb();t.sites=(t.sites||[]).filter(x=>x!==key);
+    if(contact.name||contact.phone||contact.email){t.contacts=t.contacts||{};t.contacts[key]=(t.contacts[key]||[]).filter(x=>x!==contactKey(contact));}
+    saveTomb(t);
+    entry.name=site;
+    upsert(entry,contact,true);
+    try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){console.warn('Site contacts not saved',e);}
+  }
+  function options(select,items,placeholder){
+    if(!select)return;
+    const previous=select.value;
+    select.replaceChildren(new Option(placeholder,''));
+    items.forEach((item,i)=>select.add(new Option(item.label,String(i))));
+    if([...select.options].some(o=>o.value===previous))select.value=previous;
+  }
+  function contactsFor(site){
+    return (db()[norm(site)]?.contacts||[]).filter(c=>c.name||c.phone||c.email);
+  }
+  function fillSetup(c){
+    el('setupClientName').value=c?.name||'';
+    el('setupClientPhone').value=c?.phone||'';
+    el('setupClientEmail').value=c?.email||'';
+    el('clientRepresentative').value=c?.name||'';
+  }
+  function setupContact(){return {name:clean(el('setupClientName')?.value),phone:clean(el('setupClientPhone')?.value),email:clean(el('setupClientEmail')?.value)};}
+  function refreshSetup(){
+    const sites=Object.values(db()).sort((a,b)=>a.name.localeCompare(b.name));
+    options(el('savedSiteSelect'),sites.map(x=>({label:x.name})),'Select saved site / New site');
+    const site=clean(el('siteName')?.value);
+    const siteIndex=sites.findIndex(x=>norm(x.name)===norm(site));
+    el('savedSiteSelect').value=siteIndex<0?'':String(siteIndex);
+    const contacts=contactsFor(site);
+    options(el('setupClientSelect'),contacts.map(c=>({label:[c.name,c.phone].filter(Boolean).join(' — ')||c.email})),'Add New Client');
+  }
+  function refreshDay(){
+    if(typeof currentDay==='undefined'||!currentDay)return;
+    const contacts=contactsFor(currentDay.siteName);
+    options(el('dayClientSelect'),contacts.map(c=>({label:[c.name,c.phone].filter(Boolean).join(' — ')||c.email})),'Add New Client');
+    const idx=contacts.findIndex(c=>norm(c.name)===norm(currentDay.clientRepresentative)&&
+      (!currentDay.clientPhone||c.phone===currentDay.clientPhone));
+    el('dayClientSelect').value=idx<0?'':String(idx);
+  }
+  window.diaryDeleteSite=function(){
+    const select=el('savedSiteSelect');if(!select||select.value===''){alert('Select a saved site first.');return;}
+    const sites=Object.values(db()).sort((a,b)=>a.name.localeCompare(b.name));
+    const site=sites[Number(select.value)];if(!site)return;
+    if(!confirm('Remove "'+site.name+'" and its saved contacts from the dropdown? Existing diary reports will remain unchanged.'))return;
+    const data=db(),key=norm(site.name);delete data[key];localStorage.setItem(KEY,JSON.stringify(data));
+    const t=tomb();t.sites=t.sites||[];if(!t.sites.includes(key))t.sites.push(key);saveTomb(t);
+    el('siteName').value='';fillSetup(null);refreshSetup();
+  };
+  window.diaryDeleteContact=function(fromDay){
+    const select=el(fromDay?'dayClientSelect':'setupClientSelect');
+    if(!select||select.value===''){alert('Select a saved client first.');return;}
+    const site=fromDay?currentDay?.siteName:el('siteName').value;
+    const key=norm(site),contacts=contactsFor(site),contact=contacts[Number(select.value)];if(!contact)return;
+    if(!confirm('Remove saved client "'+(contact.name||contact.email||contact.phone)+'" from '+site+'? Existing diary reports will remain unchanged.'))return;
+    const data=db();if(data[key])data[key].contacts=(data[key].contacts||[]).filter(c=>contactKey(c)!==contactKey(contact));
+    localStorage.setItem(KEY,JSON.stringify(data));
+    const t=tomb();t.contacts=t.contacts||{};t.contacts[key]=t.contacts[key]||[];
+    if(!t.contacts[key].includes(contactKey(contact)))t.contacts[key].push(contactKey(contact));saveTomb(t);
+    if(fromDay){select.value='';refreshDay();}else{fillSetup(null);refreshSetup();select.value='';}
+  };
+  window.diaryChooseSite=function(value){
+    const sites=Object.values(db()).sort((a,b)=>a.name.localeCompare(b.name));
+    el('siteName').value=value===''?'':(sites[Number(value)]?.name||'');
+    fillSetup(null);refreshSetup();
+  };
+  window.diarySiteTyped=function(){refreshSetup();};
+  window.diaryChooseSetupContact=function(value){
+    const c=value===''?null:contactsFor(el('siteName').value)[Number(value)];
+    fillSetup(c);
+  };
+  window.diaryChooseDayContact=function(value){
+    if(!currentDay)return;
+    const c=value===''?null:contactsFor(currentDay.siteName)[Number(value)];
+    el('clientRepresentativeDayInput').value=c?.name||'';
+    el('clientPhoneInput').value=c?.phone||'';
+    el('clientEmailInput').value=c?.email||'';
+    if(typeof saveClientInformationFields==='function')saveClientInformationFields();
+    if(typeof saveClientEmailAddress==='function')saveClientEmailAddress();
+    if(c){currentDay.clientInfoReused=true;currentDay.clientEmailReused=!!c.email;persistCurrent();}
+    refreshDay();
+  };
+  function saveCurrentContact(){
+    if(!currentDay)return;
+    store(currentDay.siteName,{name:clean(currentDay.clientRepresentative),phone:clean(currentDay.clientPhone),email:clean(currentDay.clientEmail)});
+    refreshDay();
+  }
+  const baseStart=startDay;
+  startDay=function(){
+    const site=clean(el('siteName').value),c=setupContact();
+    el('clientRepresentative').value=c.name;
+    const wasEditing=!!editingWorkDayDetails;
+    baseStart.apply(this,arguments);
+    if(currentDay&&norm(currentDay.siteName)===norm(site)){
+      // Preserve existing contact details while editing unless explicitly supplied.
+      if(!wasEditing||c.name||c.phone||c.email){
+        currentDay.clientRepresentative=c.name;
+        currentDay.clientPhone=c.phone;
+        currentDay.clientEmail=c.email;
+        currentDay.clientInfoReused=!!el('setupClientSelect').value;
+        currentDay.clientEmailReused=!!c.email&&!!el('setupClientSelect').value;
+        persistCurrent();
+      }
+      store(site,c);
+      if(typeof renderDay==='function')renderDay();
+      refreshDay();
+    }
+  };
+  const baseNew=newBlankDay;
+  newBlankDay=function(){baseNew.apply(this,arguments);fillSetup(null);refreshSetup();};
+  const baseClientInfo=window.saveClientInformationFields;
+  window.saveClientInformationFields=function(){
+    if(baseClientInfo)baseClientInfo.apply(this,arguments);
+    saveCurrentContact();
+  };
+  const baseEmail=window.saveClientEmailAddress;
+  window.saveClientEmailAddress=function(){
+    if(baseEmail)baseEmail.apply(this,arguments);
+    saveCurrentContact();
+  };
+  const baseOpen=openDay;
+  openDay=function(){const r=baseOpen.apply(this,arguments);refreshDay();return r;};
+  // Changes to contact information are also saved when focus leaves the field.
+  ['setupClientName','setupClientPhone','setupClientEmail'].forEach(id=>
+    el(id)?.addEventListener('input',()=>{el('setupClientSelect').value='';})
+  );
+  ['clientRepresentativeDayInput','clientPhoneInput','clientEmailInput'].forEach(id=>
+    el(id)?.addEventListener('change',()=>setTimeout(saveCurrentContact,0))
+  );
+  refreshSetup();
+  if(typeof currentDay!=='undefined'&&currentDay)refreshDay();
 })();
 </script>
 
@@ -9394,35 +9494,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   .tbprev-content{font-size:11px;min-height:0}
   .tbprev-attendance{grid-template-columns:1fr}
   .tbprev-slot{min-height:82px}
-}
-
-
-/* ===== v122 tab polish ===== */
-/* Add Delay uses a red accent. */
-#delayCard, #delayDetails { --section-accent:#ff3b30 !important; }
-#delayDetails > summary {
-  --section-accent:#ff3b30 !important;
-  color:#ff3b30 !important;
-  border-color:rgba(255,59,48,.62) !important;
-  box-shadow:inset 3px 0 0 #ff3b30 !important;
-}
-#delayDetails > summary > span:first-child,
-#delayDetails > summary .section-toggle-text,
-#delayDetails > summary::after { color:#ff3b30 !important; }
-
-/* Daily Timeline: match the same inner width/inset as the other section tabs. */
-#timelineCard { padding:10px 12px !important; }
-#timelineCard .timeline-collapse > summary {
-  width:100% !important;
-  min-height:52px !important;
-  padding:10px 13px !important;
-  margin:0 !important;
-  border-radius:13px !important;
-}
-#timelineCard .timeline-collapse-body { padding:10px 2px 4px !important; }
-@media (max-width:700px){
-  #timelineCard { padding:10px 12px !important; }
-  #timelineCard .timeline-collapse > summary { padding:10px 13px !important; }
 }
 </style>
 
@@ -9685,13 +9756,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     state.used.push(no);state.lastNo=no;rotations[key]=state;tbSaveRotation(rotations);tbSetGlobalLast(no);
     return tbTalkByNo(no);
   }
-  function tbTechs(day){
-    const list=Array.isArray(day?.techniciansList)&&day.techniciansList.length?day.techniciansList:['Clifford'];
-    const clean=[];const seen=new Set();
-    list.forEach(n=>{const s=String(n||'').trim();const k=s.toLowerCase();if(s&&!seen.has(k)&&clean.length<10){seen.add(k);clean.push(s);}});
-    if(!clean.some(n=>n.toLowerCase()==='clifford')) clean.unshift('Clifford');
-    return clean.slice(0,10);
-  }
+  function tbTechs(day){return diaryAssignedPersonnel(day).filter(n=>!/^clifford(?: aikman)?$/i.test(n));}
   function tbAssignTalk(day,tt){
     const talk=tbNextTalk(day);
     tt.talkNo=talk.no;tt.topic=talk.topic;tt.assignedAt=tbNow();
@@ -9749,7 +9814,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(sel){
       const old=sel.value;
       sel.innerHTML='<option value="">Select Technician</option>'+pending.map(n=>`<option value="${tbEsc(n)}">${tbEsc(n)}</option>`).join('');
-      if(pending.includes(old))sel.value=old;
+      sel.value=pending.includes(old)?old:(pending[0]||'');
+      sel.dispatchEvent(new Event('change',{bubbles:true}));
       sel.disabled=!pending.length;
     }
     const help=document.getElementById('toolboxTalkSignPrompt');if(help)help.textContent=pending.length?'Select a technician, ask them to sign, then tap Update Signature.':'✓ All technician signatures captured.';
@@ -9759,7 +9825,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(s==='Sent'){email.textContent=`✓ Toolbox Talk emailed to ${typeof DAILY_DIARY_WORK_EMAIL!=='undefined'?DAILY_DIARY_WORK_EMAIL:'clifford@combustion.co.za'}${tt.emailSentAt?' • '+tbTimeOnly(tt.emailSentAt):''}`;email.classList.add('tb-email-sent');}
       else if(s==='Queued'||s==='Preparing'||s==='Sending'){email.textContent='⏳ Toolbox Talk email pending / queued.';email.classList.add('tb-email-pending');}
       else if(s==='Error'){email.textContent='⚠ Toolbox Talk email not sent yet: '+(tt.emailDeliveryError||'Temporary error.');email.classList.add('tb-email-error');}
-      else email.textContent=(typeof stage2Configured==='function'&&stage2Configured())?'Toolbox Talk will email to Clifford when End Work Day is pressed.':'Email service not configured yet — Toolbox Talk will queue locally.';
+      else email.textContent=(typeof stage2Configured==='function'&&stage2Configured())?'Toolbox Talk will email to Clifford when Email Daily Dairy to Client is pressed.':'Email service not configured yet — Toolbox Talk will queue locally.';
     }
     const lib=document.getElementById('toolboxLibraryStatus');if(lib)lib.textContent='Built-in Toolbox Talk library: 11 talks. Topic is locked to this diary.';
   }
@@ -9780,15 +9846,24 @@ document.addEventListener('DOMContentLoaded',()=>{
     c.addEventListener('pointerup',finish);c.addEventListener('pointercancel',finish);c.addEventListener('pointerleave',e=>{if(e.buttons===0)finish(e);});
   }
   window.clearToolboxTalkSignature=function(){const c=tbCanvas(),ctx=tbCtx();if(!c||!ctx)return;ctx.clearRect(0,0,c.width,c.height);toolboxCanvasHasInk=false;};
-  window.saveToolboxTalkSignature=function(){
+  window.saveToolboxTalkSignature=async function(){
     if(typeof currentDay==='undefined'||!currentDay){alert('Start a work day first.');return;}
     const tt=tbEnsureDay(currentDay,true),sel=document.getElementById('toolboxTalkTechnicianSelect'),name=String(sel?.value||'').trim();
     if(!name){alert('Please select a technician first.');return;}
     if(!toolboxCanvasHasInk){alert(`Please ask ${name} to sign in the signature box first.`);return;}
     const c=tbCanvas();if(!c)return;
-    tt.signatures[name]={data:c.toDataURL('image/png'),signedAt:tbNow()};
-    if(typeof persistCurrent==='function')persistCurrent();
-    clearToolboxTalkSignature();tbRender();
+    const day=currentDay,data=c.toDataURL('image/png');
+    tt.signatures[name]={data,signedAt:tbNow()};
+    try{
+      persistCurrent();
+      await window.verifyDiarySaved(day);
+      const saved=loadAll().find(d=>String(d.id)===String(day.id));
+      if(saved?.toolboxTalk?.signatures?.[name]?.data!==data)throw new Error('Signature verification failed.');
+      if(currentDay===day){clearToolboxTalkSignature();tbRender();}
+      const signed=tbSignedNames(day).length,total=tbTechs(day).length;
+      alert(`${name}'s signature saved. ${signed}/${total} signed.${signed<total?' Ready for the next technician.':' All required technicians have signed.'}`);
+    }catch(e){alert('Signature not confirmed saved: '+e.message+' Keep the signature box open and try again.');}
+
   };
 
   // The exact 11-talk library is now permanent. Kept only as a harmless compatibility target for the hidden old input.
@@ -9836,21 +9911,23 @@ document.addEventListener('DOMContentLoaded',()=>{
     // Header
     doc.setFillColor(...dark);doc.rect(left,9,width,23,'F');
     const logo=(typeof DD_V104_LOGO!=='undefined'&&DD_V104_LOGO)||document.querySelector('.dd-brand img')?.src||'';
-    if(logo){try{doc.addImage(logo,imgFmt(logo),13,11.5,66,18,undefined,'FAST');}catch(e){text('THE COMBUSTION GROUP',14,22,12,'bold',{color:[255,255,255]});}}
+    if(logo){try{doc.addImage(logo,imgFmt(logo),13,11.5,66,18,undefined,'FAST');doc.setFillColor(...dark);doc.triangle(64,11.5,79,11.5,79,29.5,'F');}catch(e){text('THE COMBUSTION GROUP',14,22,12,'bold',{color:[255,255,255]});}}
     else text('THE COMBUSTION GROUP',14,22,12,'bold',{color:[255,255,255]});
     text('TOOLBOX TALKS',151,20.5,18,'bold',{align:'center',color:[255,255,255]});
     doc.setDrawColor(...gold);doc.setLineWidth(1.2);doc.line(101,28.5,197,28.5);
 
-    // Original-form information, automatically taken from the Daily Diary.
+    // A consistent header grid shared by every toolbox topic.
     const y1=34;
     field(10,y1,58,8,'TALK NO:',String(talk.no||''));
     field(68,y1,64,8,'DATE:',tbFmtDate(day));
-    field(132,y1,68,8,'SITE:',day.siteName||'');
-    field(10,y1+8,96,8,'TALK TOPIC:',talk.topic||'');
-    field(106,y1+8,54,8,'PRESENTED BY:','Clifford Aikman');
-    field(160,y1+8,40,8,'PR Number:',day.projectNumber||'');
+    field(132,y1,68,8,'PROJECT NO:',day.projectNumber||'');
+    field(10,y1+8,190,8,'SITE:',day.siteName||'');
+    field(10,y1+16,120,8,'TALK TOPIC:',talk.topic||'');
+    field(130,y1+16,70,8,'PRESENTED BY:','Clifford Aikman');
+    const presenter=signatures.Clifford?.data||CLIFFORD_SIGNATURE_IMAGE;
+    doc.addImage(presenter,imgFmt(presenter),177,y1+16.4,21,7,undefined,'FAST');
 
-    let y=53;
+    let y=61;
     doc.setFillColor(...dark);doc.rect(left,y,width,7,'F');
     text('TALK CONTENT/ DISCUSSION',13,y+4.9,8.4,'bold',{color:[255,255,255]});
     y+=10;
@@ -9922,7 +9999,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="tbprev-field"><div class="tbprev-field-label">SITE:</div><div class="tbprev-field-value">${tbEsc(day.siteName||'')}</div></div>
         <div class="tbprev-field wide"><div class="tbprev-field-label">TALK TOPIC:</div><div class="tbprev-field-value">${tbEsc(talk.topic||'')}</div></div>
         <div class="tbprev-field"><div class="tbprev-field-label">PR Number:</div><div class="tbprev-field-value">${tbEsc(day.projectNumber||'')}</div></div>
-        <div class="tbprev-field wide"><div class="tbprev-field-label">PRESENTED BY:</div><div class="tbprev-field-value">Clifford Aikman</div></div>
+        <div class="tbprev-field wide"><div class="tbprev-field-label">PRESENTED BY:</div><div class="tbprev-field-value">Clifford Aikman <img alt="Presenter signature" style="width:65px;height:24px;object-fit:contain;vertical-align:middle" src="${signatures.Clifford?.data||CLIFFORD_SIGNATURE_IMAGE}"></div></div>
       </div>
       <div class="tbprev-section-title">TALK CONTENT / DISCUSSION</div>
       <div class="tbprev-content">${content}</div>
@@ -9973,8 +10050,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(!navigator.onLine)throw new Error('Device is offline.');
     tbUpdateSaved(day.id,{emailDeliveryStatus:'Preparing',emailDeliveryError:''});
     const pdf=await tbBuildPdf(day);tbUpdateSaved(day.id,{emailDeliveryStatus:'Sending',emailDeliveryError:''});
-    const c=stage2Config();const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'application/json','x-daily-diary-secret':c.secret},body:JSON.stringify(tbPayload(day,pdf))});
-    const data=await r.json().catch(()=>({}));if(!r.ok||data.ok===false)throw new Error(data.error||('Email service returned HTTP '+r.status));
+    const c=stage2Config();const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},redirect:'follow',body:JSON.stringify({...tbPayload(day,pdf),secret:c.secret})});
+    const data=await r.json();if(!r.ok||data.ok!==true)throw new Error(data.error||('Email service returned HTTP '+r.status));
     tbUpdateSaved(day.id,{emailDeliveryStatus:'Sent',emailDeliveryError:'',emailSentAt:tbNow(),emailMessageId:data.messageId||''});tbRemoveOutbox(day.id);return true;
   }
   async function tbQueueAndSend(day){
@@ -10012,5 +10089,811 @@ document.addEventListener('DOMContentLoaded',()=>{
 })();
 </script>
 
+
+<style>
+.work-subgroup {margin:6px 0;border:1px solid #7b838b;border-radius:9px;padding:5px 8px;}
+.work-subgroup>summary {cursor:pointer;padding:10px 4px;font-weight:bold;}
+.work-subgroup>div {display:grid;gap:5px;}
+#workExecPopupItems .work-subgroup>summary {color:inherit;background:transparent;}
+#workExecPopupItems button {width:100%;white-space:normal;}
+</style>
+<script>
+// v124: notes and admin results use normal saved diary records and exports.
+(function(){
+  const card=document.createElement('div');
+  card.className='card no-print';
+  card.id='generalNotesCard';
+  card.innerHTML='<details class="section-collapse" id="generalNotesDetails"><summary><span>General Notes</span><span class="section-toggle-text">Tap to open</span></summary><div class="section-collapse-body"><label for="diaryNoteText">General Notes</label><textarea id="diaryNoteText" rows="5" placeholder="Type your notes or opinion here"></textarea><button type="button" id="saveDiaryNote">Add notes to diary</button></div></details>';
+  document.getElementById('workExecutedCard').after(card);
+  document.getElementById('saveDiaryNote').onclick=function(){
+    const input=document.getElementById('diaryNoteText');
+    if(!currentDay || !input.value.trim())return;
+    addEvent('General notes',input.value.trim());
+    input.value='';
+  };
+})();
+</script>
+
+<script>
+function diaryCompanyChoices134(records,removed=[]){
+ const norm=v=>String(v||'').trim().replace(/\s+/g,' ').toLocaleLowerCase();
+ const grouped=new Map();
+ [...records].sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||''))).forEach(d=>{
+   const k=norm(d.siteName);if(!k||removed.includes(k))return;
+   if(!grouped.has(k))grouped.set(k,{...d,siteName:String(d.siteName).trim().replace(/\s+/g,' ')});
+   // Fill blanks only for the same person, never mix different people's details.
+   else{const c=grouped.get(k);if(!c.clientRepresentative&&!c.clientPhone&&!c.clientEmail){for(const f of ['clientRepresentative','clientPhone','clientEmail'])c[f]=d[f]||'';}if(norm(c.clientRepresentative)===norm(d.clientRepresentative))for(const f of ['clientRepresentative','clientPhone','clientEmail'])if(!c[f]&&d[f])c[f]=d[f];}
+ });
+ return [...grouped.values()].sort((a,b)=>a.siteName.localeCompare(b.siteName,undefined,{sensitivity:'base',numeric:true}));
+}
+
+(function(){
+ const key='daily_diary_saved_orders_v124', el=id=>document.getElementById(id);
+ const norm=v=>String(v||'').trim().replace(/\s+/g,' ').toLocaleLowerCase();
+ const removedKey='daily_diary_removed_companies_v134';
+ function removed(){try{return JSON.parse(localStorage.getItem(removedKey)||'[]');}catch(e){return [];}}
+ let companyList=[];
+ const block=document.createElement('div');
+ block.innerHTML='<label for="savedOrder124">Company</label><select id="savedOrder124"><option value="">Select existing company</option></select><button type="button" id="removeCompany134" class="small danger">Remove Company</button>';
+ el('newDayCard').querySelector('.grid').prepend(block);
+ function entries(){let list=[];try{list=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){};return Array.isArray(list)?list:[];}
+ function remember(d){
+   if(!d?.siteName || removed().includes(norm(d.siteName)))return;
+   const list=entries(), id=[d.siteName,d.projectNumber,d.orderNumber,d.clientRepresentative].join('|');
+   const copy={updatedAt:d.updatedAt||d.endTimestamp||d.startTimestamp||d.date||'',siteName:d.siteName,projectArea:d.projectArea,jobReference:d.jobReference,projectNumber:d.projectNumber,projectDescription:d.projectDescription||d.projectName,orderNumber:d.orderNumber||'',clientRepresentative:d.clientRepresentative,clientPhone:d.clientPhone,clientEmail:d.clientEmail};
+   const n=list.findIndex(x=>[x.siteName,x.projectNumber,x.orderNumber,x.clientRepresentative].join('|')===id);
+   if(n>=0)list[n]=copy;else list.push(copy);
+   localStorage.setItem(key,JSON.stringify(list));
+ }
+ function refresh(){
+   (loadAll()||[]).forEach(remember);
+   const selected=el('savedOrder124').value;
+   let address={};try{address=JSON.parse(localStorage.getItem('daily_diary_site_contacts_v119')||'{}');}catch(e){}
+   const records=entries().concat(Object.values(address).map(site=>({siteName:site.name,...(()=>{const c=(site.contacts||[])[0]||{};return {clientRepresentative:c.name,clientPhone:c.phone,clientEmail:c.email};})()})));
+   companyList=diaryCompanyChoices134(records,removed());
+   const select=el('savedOrder124');select.replaceChildren(new Option('Select existing company',''));
+   companyList.forEach(d=>select.add(new Option(d.siteName,norm(d.siteName))));
+   if(companyList.some(d=>norm(d.siteName)===selected))select.value=selected;
+ }
+ el('savedOrder124').onchange=function(){
+   if(this.value===''){
+     for(const id of ['siteName','setupClientName','setupClientPhone','setupClientEmail','clientRepresentative'])el(id).value='';
+     if(window.diarySiteTyped)diarySiteTyped();return;
+   }
+   const d=companyList.find(d=>norm(d.siteName)===this.value);if(!d)return;
+   const areaRecords=[d,...entries(),...(loadAll()||[])].filter(x=>norm(x.siteName)===norm(d.siteName));
+   const area=areaRecords.map(x=>x.projectArea).find(x=>['CPT','KZN','JHB'].includes(x))||'';
+   el('projectArea').value=area;updateProjectPreview();
+   el('siteName').value=d.siteName;if(window.diarySiteTyped)diarySiteTyped();
+   for(const [id,value] of Object.entries({setupClientName:d.clientRepresentative,setupClientPhone:d.clientPhone,setupClientEmail:d.clientEmail,clientRepresentative:d.clientRepresentative}))el(id).value=value||'';
+   const contactSelect=el('setupClientSelect');
+   const found=[...contactSelect.options].find(o=>o.value!==''&&o.textContent.split(' — ')[0]===String(d.clientRepresentative||''));
+   contactSelect.value=found?found.value:'';
+   contactSelect.dispatchEvent(new Event('change',{bubbles:true}));
+   // Keep the latest saved contact fields when an address-book option is unavailable.
+   for(const [id,value] of Object.entries({setupClientName:d.clientRepresentative,setupClientPhone:d.clientPhone,setupClientEmail:d.clientEmail,clientRepresentative:d.clientRepresentative}))el(id).value=value||'';
+ };
+ el('removeCompany134').onclick=function(){
+   const selected=el('savedOrder124').value,d=companyList.find(d=>norm(d.siteName)===selected);
+   if(!d){alert('Select a company to remove first.');return;}
+   if(!confirm('Remove "'+d.siteName+'" from saved companies and contacts? Existing diaries and signatures will be kept.'))return;
+   localStorage.setItem(removedKey,JSON.stringify([...new Set([...removed(),selected])]));
+   localStorage.setItem(key,JSON.stringify(entries().filter(x=>norm(x.siteName)!==selected)));
+   let db={};try{db=JSON.parse(localStorage.getItem('daily_diary_site_contacts_v119')||'{}');}catch(e){}
+   for(const k of Object.keys(db))if(norm(db[k].name)===selected)delete db[k];
+   localStorage.setItem('daily_diary_site_contacts_v119',JSON.stringify(db));
+   let tomb={};try{tomb=JSON.parse(localStorage.getItem('daily_diary_deleted_contacts_v120')||'{}');}catch(e){}
+   tomb.sites=[...new Set([...(tomb.sites||[]),selected])];localStorage.setItem('daily_diary_deleted_contacts_v120',JSON.stringify(tomb));
+   el('savedOrder124').value='';el('savedOrder124').onchange();refresh();
+ };
+ const baseNewCompany134=newBlankDay;
+ newBlankDay=function(){baseNewCompany134.apply(this,arguments);refresh();el('savedOrder124').value='';};
+ const base=startDay;
+ startDay=function(){
+   const prior=currentDay, editing=!!editingWorkDayDetails;
+   base.apply(this,arguments);
+   if(currentDay && (currentDay!==prior || (editing&&!editingWorkDayDetails))){
+     persistCurrent();remember(currentDay);refresh();renderDay();
+   }
+ };
+ refresh();
+})();
+</script>
+
+
+<style>
+#generalNotesDetails>summary{border:1px solid #457c91;border-left:5px solid #45b9df;border-radius:14px;padding:12px;color:#45b9df;}
+#generalNotesDetails .section-collapse-body{margin-top:10px;}
+</style>
+<script>
+// Apply the app picker to controls added after the original setup.
+document.querySelectorAll('select[id]').forEach(sel=>window.enhanceDiarySelect(sel));
+</script>
+
+<style>
+#newDayCard .setup-section{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 12px;border-top:1px solid #343c40;padding-top:14px;margin-top:4px;min-width:0;}
+#newDayCard .setup-heading{grid-column:1/-1;margin:0;color:#e2bb40;font-size:14px;font-weight:800;letter-spacing:.05em;}
+#newDayCard .setup-wide{grid-column:1/-1;}
+#newDayCard .setup-section>div{min-width:0;}
+#newDayCard #setupClientFields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 12px;}
+#newDayCard #setupClientFields>div{min-width:0;}
+#newDayCard .setup-section label{display:block;margin:0 0 5px;}
+#newDayCard .setup-section input,#newDayCard .setup-section .app-select-trigger{width:100%;margin:0;min-width:0;}
+#newDayCard .setup-section .small.danger{font-size:12px!important;padding:7px 10px!important;min-height:32px!important;width:auto!important;margin:7px 0 0!important;}
+#newDayCard .same-project-field{margin:0!important;}
+</style>
+<script>
+(function(){
+ const el=id=>document.getElementById(id),grid=el('newDayCard').querySelector('.grid');
+ const field=id=>el(id).parentElement;
+ function group(title){const section=document.createElement('div');section.className='setup-section';const h=document.createElement('h3');h.className='setup-heading';h.textContent=title;section.append(h);grid.append(section);return section;}
+ function put(section,node,wide){if(wide)node.classList.add('setup-wide');section.append(node);}
+ const saved=field('savedOrder124');
+ saved.querySelector('label').textContent='Company';
+ const quick=el('samePreviousDayBtn').parentElement;
+ const savedGroup=group('SAVED DETAILS');put(savedGroup,saved,true);put(savedGroup,quick,true);
+ const project=group('PROJECT');
+ for(const id of ['projectArea','jobReference','projectNumberPreview'])put(project,field(id));
+ put(project,field('projectDescription'),true);
+ const site=group('SITE & CLIENT');
+ put(site,field('savedSiteSelect'));put(site,field('siteName'));put(site,field('setupClientSelect'),true);
+ const contacts=el('setupClientFields');
+ for(const id of ['setupClientName','setupClientPhone','setupClientEmail']){const input=el(id),label=input.previousElementSibling,wrap=document.createElement('div');wrap.append(label,input);if(id==='setupClientEmail')wrap.className='setup-wide';contacts.append(wrap);}
+ put(site,contacts,true);
+ const day=group('DATE & CONDITIONS');put(day,field('workDate'));put(day,field('weatherConditions'));put(day,field('publicHolidayOverride'),true);
+})();
+</script>
+
+<script>
+// v129: verified signature evidence and protection against unsigned overwrites.
+(function(){
+ const prefix='daily_diary_signature_evidence_v129:';
+ const signatureFields=['clientSignatureData','clientSignatureName','clientSignatureCapturedAt','tcgSignatureApplied','tcgSignatureAppliedAt'];
+ function evidence(day){
+   if(!day?.id)return null;
+   const records=[];
+   for(let i=0;i<localStorage.length;i++){
+     const key=localStorage.key(i);
+     if(!key?.startsWith(prefix+encodeURIComponent(String(day.id))+':'))continue;
+     try{const r=JSON.parse(localStorage.getItem(key));if(r.day?.clientSignatureData)records.push(r);}catch(e){}
+   }
+   records.sort((a,b)=>String(b.savedAt).localeCompare(String(a.savedAt)));
+   return records[0]?.day||null;
+ }
+ function restore(day){
+   if(!day)return day;
+   const backup=evidence(day);
+   if(backup && (!day.clientSignatureData || String(backup.clientSignatureCapturedAt)>String(day.clientSignatureCapturedAt||''))){
+     signatureFields.forEach(k=>{day[k]=backup[k];});
+   }
+   return day;
+ }
+ const baseLoad=loadAll,baseSave=saveAll;
+ loadAll=function(){return baseLoad().map(restore);};
+ saveAll=function(days){return baseSave(days.map(restore));};
+ function archive(day){
+   const savedAt=new Date().toISOString();
+   const key=prefix+encodeURIComponent(String(day.id))+':'+savedAt+':'+Math.random().toString(36).slice(2);
+   const record={format:'Daily Diary signed evidence v1',savedAt,day:{id:day.id,date:day.date,projectNumber:day.projectNumber,siteName:day.siteName,...Object.fromEntries(signatureFields.map(k=>[k,day[k]]))}};
+   const text=JSON.stringify(record);
+   localStorage.setItem(key,text);
+   if(localStorage.getItem(key)!==text)throw new Error('Signature backup could not be verified.');
+   return record;
+ }
+ let busy=false;
+ saveClientSignature=async function(){
+   if(busy||!currentDay)return;
+   if(!clientSignatureHasInk){alert('Please ask the client to sign first. Any previously saved signature is still protected.');return;}
+   const data=compactClientSignatureData();
+   if(!/^data:image\/(jpeg|png);base64,/.test(data)) {alert('Signature image could not be captured. Please keep this window open.');return;}
+   const day=currentDay,stamp=nowISO();
+   const candidate={...day,clientSignatureData:data,clientSignatureName:(document.getElementById('clientSignatureNameInput')?.value||'').trim(),clientSignatureCapturedAt:stamp,tcgSignatureApplied:true,tcgSignatureAppliedAt:stamp};
+   if(!candidate.clientRepresentative&&candidate.clientSignatureName)candidate.clientRepresentative=candidate.clientSignatureName;
+   busy=true;
+   try{
+     // Preserve every signed revision before updating the main diary.
+     await window.archiveSignatureEvidence(candidate);
+     Object.assign(day,candidate);
+     persistCurrent();
+     await window.verifyDiarySaved(day);
+     const saved=loadAll().find(x=>String(x.id)===String(day.id));
+     if(saved?.clientSignatureData!==data)throw new Error('The main diary signature could not be verified.');
+     closeClientSignatureModal();renderDay();
+     alert('Signature saved and verified on this device. Download the signed backup for a separate copy.');
+   }catch(e){
+     // Keep the captured image in memory and the pad open if saving fails.
+     Object.assign(day,candidate);
+     alert('Signature saving needs attention: '+e.message+' Keep this screen open and download the signed backup.');
+   }finally{busy=false;}
+ };
+ window.saveClientSignature=saveClientSignature;
+ function downloadEvidence(){
+   if(!currentDay?.clientSignatureData){alert('No captured signature on this diary yet.');return;}
+   const record={format:'Daily Diary signed evidence v1',exportedAt:nowISO(),day:JSON.parse(JSON.stringify(currentDay))};
+   const blob=new Blob([JSON.stringify(record,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+   a.href=url;a.download='Signed_Diary_'+String(currentDay.date||'day')+'_'+String(currentDay.id).replace(/[^A-Za-z0-9_-]/g,'_')+'.json';
+   document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+ }
+ const button=document.createElement('button');button.type='button';button.textContent='Download signed backup';button.onclick=downloadEvidence;
+ document.getElementById('clientSignatureCard').append(button);
+ const emergency=document.createElement('button');emergency.type='button';emergency.textContent='Download signed backup';emergency.onclick=downloadEvidence;
+ document.getElementById('clientSignatureModal').querySelector('.client-signature-modal-actions')?.append(emergency);
+ // Protect signatures already present before this update.
+ try{baseLoad().forEach(day=>{if(day.clientSignatureData&&!evidence(day))archive(day);});if(currentDay)restore(currentDay);}catch(e){console.warn('Signature backup unavailable:',e);}
+})();
+</script>
+
+<style>
+.diary-site-folder{border:1px solid #48545a;border-radius:12px;margin:10px 0;overflow:hidden;}
+.diary-site-folder>summary{cursor:pointer;padding:14px 12px;font-weight:800;display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(120,140,150,.1);}
+.diary-site-folder>summary::after{content:'▾';flex-shrink:0;}
+.diary-site-folder[open]>summary::after{content:'▴';}
+.diary-site-folder>summary::-webkit-details-marker{display:none;}
+.diary-site-folder>summary>span:last-child{font-size:12px;font-weight:400;}
+.diary-site-body{padding:8px 10px;}
+.diary-site-selection{margin:2px 0 10px;}
+</style>
+
+<style id="v137-colour-and-header">
+@media print {
+ .dd-modern-pages,.dd-modern-page,.dd-modern-page *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;filter:none!important;}
+ .dd-head{background:#20282a!important;color:#fff!important;}
+ .dd-head:after{background:#f36b16!important;}
+ .dd-brand{background:#20282a!important;}
+ /* Hide only the narrow industrial photo fragment next to the title. */
+ .dd-brand img{clip-path:none!important;display:block!important;visibility:visible!important;opacity:1!important;width:111%!important;min-width:111%!important;max-width:none!important;height:30mm!important;object-fit:cover!important;object-position:left center!important;}
+ .dd-title h1{color:#fff!important;}
+ .dd-title h1 span{color:#f36b16!important;}
+ .dd-title small{color:#fff!important;}
+ .dd-company{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:.7mm!important;padding:1.5mm 2mm 1.5mm 5mm!important;font-size:5.3pt!important;line-height:1.25!important;white-space:normal!important;}
+ .dd-company-row{display:grid!important;grid-template-columns:12mm minmax(0,1fr)!important;align-items:start!important;gap:1mm!important;}
+ .dd-company-row b{width:auto!important;color:#f36b16!important;}
+ .dd-company-row span{color:#fff!important;overflow-wrap:anywhere!important;}
+ .dd-personnel-title,.dd-activity-title{background:#202628!important;color:#fff!important;border-left-color:#f36b16!important;}
+}
+</style>
+
+<script>
+// v139: capture the approved layout in colour before creating the PDF.
+function diaryColourPrintCss139(){
+ const parts=[];
+ function collect(rules,inPrint){
+   for(const rule of rules){
+     // Modern browsers expose cssRules on ordinary style rules too.
+     // Collect their declarations before inspecting nested/group rules.
+     if(rule.selectorText){
+       if(inPrint && /\.dd-|dd-internal-copy/.test(rule.selectorText))parts.push(rule.cssText);
+       continue;
+     }
+     if(rule.cssRules){
+       const media=String(rule.conditionText||rule.media?.mediaText||'');
+       if(/print/i.test(media))collect(rule.cssRules,true);
+       else if(inPrint && !media)collect(rule.cssRules,true);
+     }
+   }
+ }
+ for(const sheet of document.styleSheets){try{collect(sheet.cssRules,false);}catch(e){}}
+ const css=parts.join('\n');
+ if(!css.includes('.dd-head')||!css.includes('.dd-table')||!css.includes('.dd-details'))throw new Error('The diary layout styles could not be loaded. PDF creation stopped.');
+ return css;
+}
+let diaryColourPdfBusy139=false;
+async function downloadColourDiaries139(days,internal=false,outputBase64=false){
+ if(diaryColourPdfBusy139||!days?.length)return false;
+ diaryColourPdfBusy139=true;
+ let frame;
+ try{
+   await loadStage2Script(DAILY_DIARY_JSPDF_URL);
+   await loadStage2Script('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+   if(!window.jspdf?.jsPDF||!window.html2canvas)throw new Error('The colour PDF generator could not load. Check the internet connection.');
+   const pages=[];
+   for(const day of days){const records=diaryReportRecords(day),total=Math.max(1,Math.ceil(records.length/15));for(let i=0;i<total;i++)pages.push(ddV104Page(day,records.slice(i*15,i*15+15),i,total,internal));}
+   frame=document.createElement('iframe');frame.setAttribute('aria-hidden','true');
+   frame.style.cssText='position:fixed;left:-12000px;top:0;width:820px;height:1150px;border:0;pointer-events:none;';
+   document.body.append(frame);
+   const fd=frame.contentDocument;
+   fd.open();fd.write('<!doctype html><html><head><meta charset="utf-8"><style>'+diaryColourPrintCss139()+'\nhtml,body{margin:0!important;padding:0!important;background:white!important;} .dd-modern-page{display:flex!important;margin:0!important;filter:none!important;} .dd-brand img{display:block!important;visibility:visible!important;opacity:1!important;clip-path:none!important;} </style></head><body class="'+(internal?'dd-internal-copy':'')+'">'+pages.join('')+'</body></html>');fd.close();
+   await Promise.all([...fd.images].map(img=>new Promise((resolve,reject)=>{
+     if(img.complete){img.naturalWidth?resolve():reject(new Error('A logo or signature could not load. PDF creation stopped.'));return;}
+     img.onload=resolve;img.onerror=()=>reject(new Error('A logo or signature could not load. PDF creation stopped.'));
+   })));
+   await fd.fonts?.ready;
+   const pdf=new window.jspdf.jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
+   let i=0;
+   for(const page of fd.querySelectorAll('.dd-modern-page')){
+     const canvas=await window.html2canvas(page,{scale:3,backgroundColor:'#ffffff',logging:false,windowWidth:820,windowHeight:1150});
+     if(i++)pdf.addPage();pdf.addImage(canvas.toDataURL('image/png'),'PNG',5,5,200,270,undefined,'FAST');
+   }
+   if(outputBase64)return pdf.output('datauristring').split(',')[1];
+   pdf.save('Daily_Diary_Colour_'+(days.length===1?String(days[0].date||'day'):'Selected_Diaries')+'.pdf');
+   return true;
+ }catch(e){alert('Colour PDF could not be created: '+String(e.message||e));return false;}
+ finally{frame?.remove();diaryColourPdfBusy139=false;}
+}
+printDailyDiary=async function(){
+ if(!currentDay)return;syncWorkDayTimesFromTimeline();persistCurrent();renderDay();
+ return downloadColourDiaries139([currentDay],false);
+};
+printInternalDailyDiary=async function(){
+ if(!currentDay)return;syncWorkDayTimesFromTimeline();persistCurrent();renderDay();
+ return downloadColourDiaries139([currentDay],true);
+};
+window.printDailyDiary=printDailyDiary;window.printInternalDailyDiary=printInternalDailyDiary;
+printSelectedDiaries=async function(){
+ const selected=selectedDiaryDays();if(!selected.length){alert('Select diaries first.');return;}
+ if(!await downloadColourDiaries139(selected,false))return;
+ const ids=new Set(selected.map(d=>String(d.id))),stamp=nowISO();
+ saveAll(loadAll().map(d=>ids.has(String(d.id))?{...d,diaryPrintedAt:d.diaryPrintedAt||stamp}:d));
+ renderDiaryManager();renderSavedDays();
+};
+window.printSelectedDiaries=printSelectedDiaries;
+buildDailyDiaryStage2Pdf=async function(day){const result=await downloadColourDiaries139([day],false,true);if(!result)throw new Error('The complete colour diary PDF could not be generated.');return result;};
+</script>
+
+
+<style>
+.client-mode-tabs{display:flex;gap:10px;margin:16px 0;}
+.client-mode-tabs button{flex:1;border:1px solid #61666a;background:#101719;color:#ddd;}
+.client-mode-tabs button[aria-selected="true"]{border-color:#f4c542;color:#f4c542;background:#242419;}
+#newDayCard input.client-locked{background:#252a2c!important;color:#aeb5b8!important;cursor:default;}
+#newDayCard [data-client-mode-hidden]{display:none!important;}
+.client-mode-hint{font-size:13px;color:#aeb5b8;margin:0 0 12px;}
+</style>
+<script>
+// v140: a clear choice between saved company details and a new client.
+(function(){
+ const el=id=>document.getElementById(id),card=el('newDayCard'),company=el('savedOrder124');
+ const saved=company.parentElement,savedGroup=saved.parentElement,quick=el('samePreviousDayBtn').parentElement;
+ const site=el('siteName'),fields=['siteName','setupClientName','setupClientPhone','setupClientEmail','clientRepresentative','projectArea'];
+ const tabs=document.createElement('div');tabs.className='client-mode-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Client setup');
+ tabs.innerHTML='<button type="button" role="tab" id="existingClientTab140">Existing Client</button><button type="button" role="tab" id="newClientTab140">New Client</button>';
+ const hint=document.createElement('p');hint.className='client-mode-hint';hint.setAttribute('aria-live','polite');
+ card.querySelector('h2').after(tabs,hint);
+ el('savedSiteSelect').parentElement.setAttribute('data-client-mode-hidden','');
+ el('setupClientSelect').parentElement.setAttribute('data-client-mode-hidden','');
+ site.previousElementSibling.textContent='Company / Site Name';
+ for(const id of ['setupClientName','setupClientPhone','setupClientEmail'])el(id).previousElementSibling.textContent+= ' (optional)';
+ const heading=savedGroup.querySelector('.setup-heading');heading.textContent='EXISTING CLIENT';
+ let mode='existing',newDraft=null,existingDraft=null;
+ function capture(){return Object.fromEntries(fields.map(id=>[id,el(id).value]));}
+ function fill(values){for(const id of fields)el(id).value=values?.[id]||'';}
+ function show(node,visible){node.toggleAttribute('data-client-mode-hidden',!visible);}
+ function paint(){
+   const existing=mode==='existing';
+   el('existingClientTab140').setAttribute('aria-selected',String(existing));
+   el('newClientTab140').setAttribute('aria-selected',String(!existing));
+   show(savedGroup,existing);show(quick,existing);show(el('projectArea').parentElement,!existing);
+   updateProjectPreview();
+   for(const id of fields){const input=el(id);if(input.type!=='hidden'&&id!=='projectArea'){input.readOnly=existing;input.classList.toggle('client-locked',existing);input.setAttribute('aria-readonly',String(existing));}}
+   hint.textContent=existing?'Select a saved company. Its details are locked here. Enter the project details below.':'Enter a new company / site. Contact details are optional and can be added on site.';
+ }
+ function switchMode(next){
+   if(mode===next)return;
+   if(mode==='new')newDraft=capture();else existingDraft={values:capture(),company:company.value};
+   mode=next;
+   if(mode==='new'){company.value='';fill(newDraft);el('setupClientSelect').value='';}
+   else{company.value=existingDraft?.company||'';if(company.value)company.onchange();else fill(existingDraft?.values);}
+   paint();
+ }
+ el('existingClientTab140').onclick=()=>switchMode('existing');
+ el('newClientTab140').onclick=()=>switchMode('new');
+ const choose=company.onchange;
+ company.onchange=function(){choose.call(this);paint();};
+ const baseStart=startDay;
+ startDay=function(){
+   if(mode==='existing'){
+     if(!company.value){alert('Select an existing company, or choose New Client.');company.focus();return;}
+     company.onchange();
+     if(!el('projectArea').value){alert('This saved company has no saved area yet. Use New Client once to enter its area and save the details.');return;}
+   }
+   const previous=currentDay,editing=!!editingWorkDayDetails;
+   const result=baseStart.apply(this,arguments);
+   if(currentDay&&(currentDay!==previous||editing&&!editingWorkDayDetails)){
+     if(!editing||!currentDay.clientSetupMode)currentDay.clientSetupMode=mode;
+     persistCurrent();
+   }
+   return result;
+ };
+ window.startDay=startDay;
+ const baseNew=newBlankDay;
+ newBlankDay=function(){const result=baseNew.apply(this,arguments);mode='existing';newDraft=null;existingDraft=null;fill(null);paint();return result;};
+ window.newBlankDay=newBlankDay;
+ const baseEdit=editWorkDayDetails;
+ editWorkDayDetails=function(){
+   const result=baseEdit.apply(this,arguments);
+   // Editing an existing diary keeps its own recorded contact details.
+   mode='new';company.value='';newDraft=capture();paint();return result;
+ };
+ window.editWorkDayDetails=editWorkDayDetails;
+ paint();
+})();
+</script>
+
+
+<script>
+// v141: work-day completion button now lives alongside permit actions.
+(function(){
+ const oldCard=document.getElementById('workDayCompletedCard');
+ if(oldCard)oldCard.remove();
+ const oldDetails=document.getElementById('workDayCompletedDetails');
+ if(oldDetails)oldDetails.closest('.card')?.remove();
+})();
+</script>
+
+
+<script>
+// v142: signed diary requirements apply to the button and every delivery retry.
+function diaryEmailMissing142(day){
+ const missing=[];
+ if(!day?.clientSignatureData || !day.clientSignatureCapturedAt)missing.push('Client signature');
+ const existing=day?.clientSetupMode==='existing'||(!day?.clientSetupMode&&day?.clientInfoReused);
+ if(!existing){
+   if(!String(day?.clientRepresentative||'').trim())missing.push('Client name');
+   if(!String(day?.clientPhone||'').trim())missing.push('Client cellphone');
+   if(!validDailyDiaryEmail(String(day?.clientEmail||'').trim()))missing.push('Client email');
+ }
+ return missing;
+}
+(function(){
+ const complete=endDay;
+ endDay=function(){
+   if(!currentDay)return;
+   if(typeof saveClientInformationFields==='function')saveClientInformationFields();
+   const input=document.getElementById('clientEmailInput');
+   if(input)currentDay.clientEmail=input.value.trim();
+   const missing=diaryEmailMissing142(currentDay);
+   if(missing.length){
+     const existing=currentDay.clientSetupMode==='existing'||(!currentDay.clientSetupMode&&currentDay.clientInfoReused);
+     diaryNotice144(existing?'Client signature required.':'Before emailing the diary, please enter:\n\n'+missing.map(item=>'• '+item).join('\n'));
+     const info=document.getElementById('clientInfoDetails');if(info)info.open=true;
+     return;
+   }
+   window.diaryEmailNoticeDay145=currentDay.id;
+   return complete.apply(this,arguments);
+ };
+ window.endDay=endDay;
+ const send=sendDailyDiaryStage2;
+ sendDailyDiaryStage2=async function(day){
+   const missing=diaryEmailMissing142(day);
+   if(missing.length)throw new Error('Email blocked. Required: '+missing.join(', ')+'.');
+   return send.apply(this,arguments);
+ };
+ window.sendDailyDiaryStage2=sendDailyDiaryStage2;
+})();
+</script>
+
+
+<style>
+#diaryNotice144{width:min(440px,calc(100vw - 40px));box-sizing:border-box;padding:0;border:1px solid #f4c542;border-radius:18px;background:#11191d;color:#f5f7f8;box-shadow:0 16px 60px #000b;font-family:Arial,Helvetica,sans-serif;}
+#diaryNotice144::backdrop{background:rgba(0,0,0,.72);}
+#diaryNotice144 h3{margin:0;padding:18px 22px;border-bottom:1px solid #394247;color:#f4c542;font-size:20px;}
+#diaryNotice144 p{margin:0;padding:22px;white-space:pre-line;line-height:1.6;font-size:16px;}
+#diaryNotice144 .notice-actions{display:flex;justify-content:flex-end;padding:0 22px 20px;}
+#diaryNotice144 button{min-width:100px;background:#20282c;color:#f4c542;border:1px solid #f4c542;border-radius:10px;padding:12px 22px;font-weight:700;cursor:pointer;}
+#diaryNotice144 button:focus-visible{outline:2px solid #36c6f4;outline-offset:3px;}
+</style>
+<dialog id="diaryNotice144" aria-labelledby="diaryNoticeTitle144" aria-describedby="diaryNoticeText144"><h3 id="diaryNoticeTitle144">Daily Diary</h3><p id="diaryNoticeText144"></p><form method="dialog" class="notice-actions"><button autofocus>OK</button></form></dialog>
+<script>
+function diaryNotice144(message){
+ const dialog=document.getElementById('diaryNotice144');
+ document.getElementById('diaryNoticeText144').textContent=message;
+ if(!dialog.open)dialog.showModal();
+}
+</script>
+
+
+<style>
+#newDayCard .client-mode-tabs button[aria-selected="true"]{background:#f4c542!important;color:#11191d!important;border:2px solid #ffe778!important;box-shadow:0 0 0 2px #f4c54244!important;font-weight:800!important;}
+#newDayCard .client-mode-tabs button[aria-selected="false"]{background:#101719!important;color:#c3c9cc!important;border:1px solid #454f54!important;box-shadow:none!important;}
+@media print{
+ .dd-brand{position:relative!important;}
+ /* Mask the industrial photo along the logo's upper right edge, keeping the full logo text. */
+ .dd-brand:after{content:"";position:absolute;right:0;top:0;width:0;height:0;border-top:30mm solid #20282a;border-left:12mm solid transparent;pointer-events:none;}
+}
+</style>
+<script>
+(function(){
+ const update=updateSavedDayEmailDelivery;
+ updateSavedDayEmailDelivery=function(dayId,patch){
+   const result=update.apply(this,arguments);
+   if(window.diaryEmailNoticeDay145===dayId){
+     let message='';
+     if(patch.emailDeliveryStatus==='Sent')message='Daily Diary email sent successfully.';
+     else if(patch.emailDeliveryStatus==='Queued')message='Email not sent yet. It is saved in the queue and will retry when the connection and email service are available.';
+     else if(patch.emailDeliveryStatus==='Error')message='Email could not be sent. '+(patch.emailDeliveryError||'Please try again.');
+     if(message){window.diaryEmailNoticeDay145=null;diaryNotice144(message);}
+   }
+   return result;
+ };
+ window.updateSavedDayEmailDelivery=updateSavedDayEmailDelivery;
+})();
+</script>
+
+
+<style>
+#activeDay #workExecutedCard details.work-category > summary{border-radius:14px!important;border:2px solid var(--work-edge,#f36b16)!important;box-shadow:inset 0 1px 0 #ffffff24!important;overflow:hidden!important;}
+#activeDay #workExecutedCard details.work-category:nth-of-type(1)>summary{--work-edge:#579eff;}
+#activeDay #workExecutedCard details.work-category:nth-of-type(2)>summary{--work-edge:#f7c940;}
+#activeDay #workExecutedCard details.work-category:nth-of-type(3)>summary{--work-edge:#cc70ff;}
+#activeDay #workExecutedCard details.work-category:nth-of-type(4)>summary{--work-edge:#ff7777;}
+#activeDay #workExecutedCard details.work-category.admin146>summary{background:linear-gradient(135deg,#086b63,#11998b)!important;color:#fff!important;--work-edge:#4ee3ce;}
+</style>
+<script>
+(function(){
+ document.querySelectorAll('#workExecutedCard details.work-category').forEach(section=>{
+   const summary=section.querySelector('summary');
+   if(summary&&/ADMIN/i.test(summary.textContent)){section.classList.add('admin146');if(!summary.textContent.includes('📋'))summary.textContent='📋 ADMIN';}
+ });
+ const queue=queueAndSendDailyDiaryStage2;
+ queueAndSendDailyDiaryStage2=function(day){
+   if(day&&window.diaryEmailNoticeDay145===day.id){
+     diaryNotice144('Email request received. Your diary is being prepared for sending. If you are offline, it will stay queued until a connection is available.');
+   }
+   return queue.apply(this,arguments);
+ };
+ window.queueAndSendDailyDiaryStage2=queueAndSendDailyDiaryStage2;
+})();
+</script>
+
+
+<style>
+html body #delayDetails.section-collapse > summary,
+html body #accessDetails.section-collapse > summary,
+html body #timelineDetails.section-collapse > summary,
+html body #toolboxTalkDetails.section-collapse > summary,
+html body #clientInfoDetails.section-collapse > summary,
+html body #dayControlsDetails.section-collapse > summary,
+html body #workDayCompletedDetails.section-collapse > summary,
+html body #savedDaysDetails.section-collapse > summary,
+html body #syncDetails.section-collapse > summary{box-sizing:border-box!important;min-height:62px!important;height:62px!important;padding:0 17px!important;margin:0!important;display:flex!important;align-items:center!important;gap:10px!important;background:linear-gradient(180deg,#151d22,#0d1317)!important;border:1px solid var(--header-border,#465159)!important;border-radius:15px!important;box-shadow:inset 4px 0 0 var(--section-accent,#9caab3),0 5px 15px #0003!important;font-size:19px!important;line-height:1.1!important;font-weight:900!important;color:var(--section-accent,#e8edf0)!important;letter-spacing:.01em!important;text-transform:none!important;}
+html body #delayDetails.section-collapse > summary span:first-child,
+html body #accessDetails.section-collapse > summary span:first-child,
+html body #timelineDetails.section-collapse > summary span:first-child,
+html body #toolboxTalkDetails.section-collapse > summary span:first-child,
+html body #clientInfoDetails.section-collapse > summary span:first-child,
+html body #dayControlsDetails.section-collapse > summary span:first-child,
+html body #workDayCompletedDetails.section-collapse > summary span:first-child,
+html body #savedDaysDetails.section-collapse > summary span:first-child,
+html body #syncDetails.section-collapse > summary span:first-child{font-size:inherit!important;line-height:inherit!important;font-weight:900!important;color:inherit!important;text-transform:none!important;letter-spacing:.01em!important;}
+html body #delayDetails.section-collapse > summary .section-toggle-text,
+html body #accessDetails.section-collapse > summary .section-toggle-text,
+html body #timelineDetails.section-collapse > summary .section-toggle-text,
+html body #toolboxTalkDetails.section-collapse > summary .section-toggle-text,
+html body #clientInfoDetails.section-collapse > summary .section-toggle-text,
+html body #dayControlsDetails.section-collapse > summary .section-toggle-text,
+html body #workDayCompletedDetails.section-collapse > summary .section-toggle-text,
+html body #savedDaysDetails.section-collapse > summary .section-toggle-text,
+html body #syncDetails.section-collapse > summary .section-toggle-text{margin-left:auto!important;font-size:12px!important;font-weight:700!important;line-height:1.1!important;color:#aab2b8!important;text-transform:none!important;letter-spacing:normal!important;white-space:nowrap!important;}
+html body #delayDetails.section-collapse > summary::after,
+html body #accessDetails.section-collapse > summary::after,
+html body #timelineDetails.section-collapse > summary::after,
+html body #toolboxTalkDetails.section-collapse > summary::after,
+html body #clientInfoDetails.section-collapse > summary::after,
+html body #dayControlsDetails.section-collapse > summary::after,
+html body #workDayCompletedDetails.section-collapse > summary::after,
+html body #savedDaysDetails.section-collapse > summary::after,
+html body #syncDetails.section-collapse > summary::after{position:static!important;margin-left:4px!important;transform:none!important;font-size:20px!important;line-height:1!important;color:var(--section-accent,#9caab3)!important;}
+
+#toolboxTalkDetails{--section-accent:#f4c542;--header-border:#6b5b1d;}
+#clientInfoDetails{--section-accent:#ff8a3d;--header-border:#744326;}
+#dayControlsDetails{--section-accent:#5cbdf3;--header-border:#315d75;}
+#workDayCompletedDetails{--section-accent:#7bd95a;--header-border:#3d6331;}
+html body #toolboxTalkCard{padding:14px!important;border:1px solid #303b42!important;border-radius:18px!important;background:#0d1317!important;}
+html body #travelCard .grid button:nth-child(9) .action-icon,
+html body #travelCard .grid button:nth-child(10) .action-icon{color:#ffd34e!important;opacity:1!important;filter:none!important;}
+html body #travelCard .grid button:nth-child(9) .action-icon svg,
+html body #travelCard .grid button:nth-child(10) .action-icon svg{width:28px!important;height:28px!important;stroke:currentColor!important;opacity:1!important;}
+@media(max-width:700px){html body #delayDetails.section-collapse > summary,
+html body #accessDetails.section-collapse > summary,
+html body #timelineDetails.section-collapse > summary,
+html body #toolboxTalkDetails.section-collapse > summary,
+html body #clientInfoDetails.section-collapse > summary,
+html body #dayControlsDetails.section-collapse > summary,
+html body #workDayCompletedDetails.section-collapse > summary,
+html body #savedDaysDetails.section-collapse > summary,
+html body #syncDetails.section-collapse > summary{height:60px!important;min-height:60px!important;padding:0 14px!important;font-size:17px!important;border-radius:14px!important;}}
+
+#delayDetails{--header-border:#744326;}
+#accessDetails{--header-border:#285e54;}
+#timelineDetails{--header-border:#28576d;}
+#savedDaysDetails{--header-border:#594074;}
+#syncDetails{--header-border:#465159;}
+</style>
+
+<style id="v148-work-actions-and-spares">
+/* Keep action buttons compact and place them side by side where the layout allows. */
+#activeDay #workActionsCard .grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,320px))!important;
+  justify-content:center!important;
+  gap:10px!important;
+}
+#activeDay #workActionsCard .grid button{
+  width:100%!important;
+  max-width:320px!important;
+  min-height:70px!important;
+  height:auto!important;
+  margin:0 auto!important;
+  border-radius:14px!important;
+}
+/* Mark the two spares actions with a clear gold outline only. */
+#activeDay #travelCard .grid button:nth-child(9),
+#activeDay #travelCard .grid button:nth-child(10){
+  border:1.5px solid #f4c542!important;
+  border-radius:14px!important;
+  box-shadow:inset 0 0 0 1px #f4c54222!important;
+}
+@media(max-width:520px){
+ #activeDay #workActionsCard .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;}
+ #activeDay #workActionsCard .grid button{min-height:64px!important;padding:7px!important;}
+}
+</style>
+
+
+<style id="v149-permit-spares-colours">
+/* Permit actions get distinct, easy-to-spot borders. */
+#activeDay #workActionsCard .grid button:nth-child(1){border:1.5px solid #f39b45!important;box-shadow:inset 0 0 0 1px #f39b4522!important;border-radius:14px!important;}
+#activeDay #workActionsCard .grid button:nth-child(2){border:1.5px solid #45c7ff!important;box-shadow:inset 0 0 0 1px #45c7ff22!important;border-radius:14px!important;}
+/* Spares use separate colours instead of yellow. */
+#activeDay #travelCard .grid button:nth-child(9){border:1.5px solid #42d6c3!important;box-shadow:inset 0 0 0 1px #42d6c322!important;}
+#activeDay #travelCard .grid button:nth-child(9) .action-icon{color:#42d6c3!important;}
+#activeDay #travelCard .grid button:nth-child(10){border:1.5px solid #71d975!important;box-shadow:inset 0 0 0 1px #71d97522!important;}
+#activeDay #travelCard .grid button:nth-child(10) .action-icon{color:#71d975!important;}
+</style>
+
+
+<style id="v150-unified-spares-purple-permits">
+#activeDay #travelCard .grid button:nth-child(9),
+#activeDay #travelCard .grid button:nth-child(10){border:1.5px solid #42d6c3!important;box-shadow:inset 0 0 0 1px #42d6c322!important;}
+#activeDay #travelCard .grid button:nth-child(9) .action-icon,
+#activeDay #travelCard .grid button:nth-child(10) .action-icon{color:#42d6c3!important;}
+#activeDay #workActionsCard .grid button:nth-child(1),
+#activeDay #workActionsCard .grid button:nth-child(2){border:1.5px solid #b56cff!important;box-shadow:inset 0 0 0 1px #b56cff22!important;}
+#activeDay #workActionsCard .grid button:nth-child(1) .action-icon,
+#activeDay #workActionsCard .grid button:nth-child(2) .action-icon{color:#b56cff!important;}
+</style>
+
+
+<style id="v151-aligned-distinct-section-tabs">
+/* Consistent left-aligned section headers with distinct accent colors. */
+#activeDay .section-collapse>summary{
+  box-sizing:border-box!important;min-height:54px!important;padding:10px 14px!important;
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;
+  border:1px solid var(--tab-border,#35434a)!important;border-left:5px solid var(--tab-accent,#42c7ee)!important;
+  border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;
+  color:var(--tab-accent,#42c7ee)!important;font-family:inherit!important;font-size:18px!important;font-weight:800!important;line-height:1.2!important;
+}
+#activeDay .section-collapse>summary>span:first-child{margin:0!important;text-align:left!important;font:inherit!important;color:inherit!important;}
+#activeDay .section-collapse>summary .section-toggle-text{margin-left:auto!important;color:#b7c0c5!important;font-family:inherit!important;font-size:12px!important;font-weight:600!important;}
+#activeDay .section-collapse>summary::after{margin-left:0!important;color:var(--tab-accent,#42c7ee)!important;}
+#activeDay .section-collapse[open]>summary{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tab-accent) 18%,transparent)!important;}
+#generalNotesDetails{--tab-accent:#45c7ff;--tab-border:#286a80}
+#delayDetails{--tab-accent:#ff8738;--tab-border:#87461e}
+#accessDetails{--tab-accent:#42d6b5;--tab-border:#23695b}
+#timelineDetails,#dailyTimelineDetails{--tab-accent:#45c7ff;--tab-border:#286a80}
+#toolboxTalkDetails{--tab-accent:#f4c542;--tab-border:#826a20}
+#clientInfoDetails{--tab-accent:#ff8738;--tab-border:#87461e}
+#dayControlsDetails{--tab-accent:#5bb7e8;--tab-border:#326785}
+#savedDaysDetails{--tab-accent:#bd78ff;--tab-border:#704493}
+#syncDetails{--tab-accent:#9eabb2;--tab-border:#58666e}
+#hoursDetails{--tab-accent:#72d875;--tab-border:#3e7942}
+#hoursReportsDetails{--tab-accent:#e88bd2;--tab-border:#814a78}
+#activeDay #workActionsCard .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+#activeDay #workActionsCard .grid button:nth-child(3){border:1.5px solid #72d875!important;box-shadow:inset 0 0 0 1px #72d87522!important;border-radius:14px!important;}
+#activeDay #workActionsCard .grid button:nth-child(3) .action-icon{color:#72d875!important;}
+@media(max-width:520px){#activeDay #workActionsCard .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#activeDay #workActionsCard .grid button:nth-child(3){grid-column:1/-1;}}
+</style>
+
+
+<style id="v152-uniform-headers">
+#generalNotesDetails{ --tab-accent:#45c7ff; }
+body #activeDay #generalNotesDetails>summary,body #generalNotesDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #45c7ff66!important;border-left:4px solid #45c7ff!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#45c7ff!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #generalNotesDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #generalNotesDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #generalNotesDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#45c7ff!important;margin:0!important;}
+#delayDetails{ --tab-accent:#ff8738; }
+body #activeDay #delayDetails>summary,body #delayDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #ff873866!important;border-left:4px solid #ff8738!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#ff8738!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #delayDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #delayDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #delayDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#ff8738!important;margin:0!important;}
+#accessDetails{ --tab-accent:#42d6b5; }
+body #activeDay #accessDetails>summary,body #accessDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #42d6b566!important;border-left:4px solid #42d6b5!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#42d6b5!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #accessDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #accessDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #accessDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#42d6b5!important;margin:0!important;}
+#timelineDetails{ --tab-accent:#818cff; }
+body #activeDay #timelineDetails>summary,body #timelineDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #818cff66!important;border-left:4px solid #818cff!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#818cff!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #timelineDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #timelineDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #timelineDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#818cff!important;margin:0!important;}
+#toolboxTalkDetails{ --tab-accent:#f4c542; }
+body #activeDay #toolboxTalkDetails>summary,body #toolboxTalkDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #f4c54266!important;border-left:4px solid #f4c542!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#f4c542!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #toolboxTalkDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #toolboxTalkDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #toolboxTalkDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#f4c542!important;margin:0!important;}
+#clientInfoDetails{ --tab-accent:#f18cbc; }
+body #activeDay #clientInfoDetails>summary,body #clientInfoDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #f18cbc66!important;border-left:4px solid #f18cbc!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#f18cbc!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #clientInfoDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #clientInfoDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #clientInfoDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#f18cbc!important;margin:0!important;}
+#dayControlsDetails{ --tab-accent:#72d875; }
+body #activeDay #dayControlsDetails>summary,body #dayControlsDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #72d87566!important;border-left:4px solid #72d875!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#72d875!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #dayControlsDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #dayControlsDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #dayControlsDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#72d875!important;margin:0!important;}
+#savedDaysDetails{ --tab-accent:#bd78ff; }
+body #activeDay #savedDaysDetails>summary,body #savedDaysDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #bd78ff66!important;border-left:4px solid #bd78ff!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#bd78ff!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #savedDaysDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #savedDaysDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #savedDaysDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#bd78ff!important;margin:0!important;}
+#syncDetails{ --tab-accent:#9eabb2; }
+body #activeDay #syncDetails>summary,body #syncDetails>summary{box-sizing:border-box!important;min-height:58px!important;height:auto!important;width:100%!important;margin:0!important;padding:12px 14px!important;display:flex!important;align-items:center!important;gap:10px!important;border:1px solid #9eabb266!important;border-left:4px solid #9eabb2!important;border-radius:14px!important;background:linear-gradient(180deg,#151c20,#0d1215)!important;color:#9eabb2!important;font:800 18px/1.2 Arial,sans-serif!important;text-transform:none!important;box-shadow:none!important;}
+body #syncDetails>summary>span:first-child{font:inherit!important;color:inherit!important;margin:0!important;padding:0!important;text-align:left!important;}
+body #syncDetails>summary>span:last-child{margin-left:auto!important;font:600 11px/1.2 Arial,sans-serif!important;color:#bac5cc!important;}
+body #syncDetails>summary::after{font:800 18px/1 Arial,sans-serif!important;color:#9eabb2!important;margin:0!important;}
+</style>
+<script>
+(function(){function alignHeaders(){document.getElementById('generalNotesDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('delayDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('accessDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('timelineDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('toolboxTalkDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('clientInfoDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('dayControlsDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('savedDaysDetails')?.closest('.card')?.classList.add('uniform-tab-card');document.getElementById('syncDetails')?.closest('.card')?.classList.add('uniform-tab-card');}alignHeaders();document.addEventListener("DOMContentLoaded",alignHeaders);})();
+</script>
+<style>body .card.uniform-tab-card{box-sizing:border-box!important;padding:12px!important;margin-left:0!important;margin-right:0!important;width:100%!important;border:1px solid #303b40!important;border-radius:16px!important;background:#0d1215!important;}body .uniform-tab-card>details{margin:0!important;padding:0!important;}</style>
+
+<script id="v153-durable-diary-saves">
+(function(){
+ const KEY='sitelog_days',PREFIX='daily_diary_signature_evidence_v129:';
+ const priorLoad=loadAll,priorSave=saveAll;
+ let fallback=null,pending=Promise.resolve(),lastSaveError=null;
+ const ready=new Promise((resolve,reject)=>{
+   const request=indexedDB.open('TCG_Diary_Durable_v1',1);
+   request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains('records'))db.createObjectStore('records');};
+   request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);
+ });
+ function txWrite(entries){return ready.then(db=>new Promise((resolve,reject)=>{
+   const tx=db.transaction('records','readwrite'),store=tx.objectStore('records');
+   entries.forEach(([k,v])=>store.put(v,k));tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('Save cancelled.'));
+ }));}
+ function read(key){return ready.then(db=>new Promise((resolve,reject)=>{const req=db.transaction('records').objectStore('records').get(key);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);}));}
+ function notice(message){let el=document.getElementById('diarySaveNotice');if(!el){el=document.createElement('div');el.id='diarySaveNotice';el.style.cssText='position:sticky;top:0;z-index:10000;background:#49251b;color:#fff;padding:12px;border:2px solid #ff8738;border-radius:12px';document.body.prepend(el);}el.textContent=message;}
+ window.archiveSignatureEvidence=async function(day){
+   const key=PREFIX+encodeURIComponent(String(day.id))+':'+new Date().toISOString()+':'+Math.random().toString(36).slice(2);
+   const record={format:'Daily Diary signed evidence v1',savedAt:new Date().toISOString(),day:JSON.parse(JSON.stringify(day))};
+   try{await txWrite([[key,record]]);}catch(e){localStorage.setItem(key,JSON.stringify(record));if(localStorage.getItem(key)!==JSON.stringify(record))throw e;}
+ };
+ loadAll=function(){return fallback?JSON.parse(JSON.stringify(fallback)):priorLoad();};window.loadAll=loadAll;
+ saveAll=function(days){
+   const snapshot=JSON.parse(JSON.stringify(days));
+   const existing=fallback||priorLoad();snapshot.forEach(d=>{const old=existing.find(x=>String(x.id)===String(d.id));if(old?.clientSignatureData&&(!d.clientSignatureData||String(old.clientSignatureCapturedAt)>String(d.clientSignatureCapturedAt||''))){['clientSignatureData','clientSignatureName','clientSignatureCapturedAt','tcgSignatureApplied','tcgSignatureAppliedAt'].forEach(k=>{d[k]=old[k];});}});fallback=snapshot;
+   let localSaved=false;try{priorSave(snapshot);localSaved=true;}catch(e){if(e.name!=='QuotaExceededError')console.warn(e);}
+   pending=pending.catch(()=>{}).then(()=>txWrite([[KEY,snapshot]])).then(()=>{lastSaveError=null;document.getElementById('diarySaveNotice')?.remove();}).catch(e=>{lastSaveError=localSaved?null:e;if(!localSaved)notice('Diary could not be saved. Keep this page open and Export Backup now. '+e.message);});
+ };
+ window.saveAll=saveAll;
+ window.verifyDiarySaved=async function(day){
+   await pending;if(lastSaveError)throw lastSaveError;
+   let saved;try{saved=await read(KEY);}catch(e){saved=JSON.parse(localStorage.getItem(KEY)||'[]');}
+   const record=(saved||[]).find(d=>String(d.id)===String(day.id));
+   if(!record||JSON.stringify(record.events)!==JSON.stringify(day.events))throw new Error('Diary save verification failed.');
+   if(day.clientSignatureData&&record.clientSignatureData!==day.clientSignatureData)throw new Error('Client signature was not saved.');
+   for(const [name,sig] of Object.entries(day.toolboxTalk?.signatures||{}))if(record.toolboxTalk?.signatures?.[name]?.data!==sig.data)throw new Error(name+' signature was not saved.');
+ };
+ // Migrate existing evidence only after its durable transaction completes. No evidence is discarded.
+ ready.then(async()=>{
+   const keys=Object.keys(localStorage).filter(k=>k.startsWith(PREFIX)),entries=[];
+   keys.forEach(k=>{try{entries.push([k,JSON.parse(localStorage.getItem(k))]);}catch(e){}});
+   if(entries.length)await txWrite(entries);
+   if(fallback)return;
+   const disk=await read(KEY),local=priorLoad(),merged=new Map();
+   [...(disk||[]),...local].forEach(d=>{const old=merged.get(String(d.id));if(!old||String(d.updatedAt||d.startTimestamp||'')>=String(old.updatedAt||old.startTimestamp||''))merged.set(String(d.id),d);});
+   // Restore the newest legacy signature evidence before removing its old local copy.
+   entries.forEach(([,record])=>{const evidence=record.day,d=merged.get(String(evidence?.id));if(d&&evidence.clientSignatureData&&(!d.clientSignatureData||String(evidence.clientSignatureCapturedAt)>String(d.clientSignatureCapturedAt||''))){['clientSignatureData','clientSignatureName','clientSignatureCapturedAt','tcgSignatureApplied','tcgSignatureAppliedAt'].forEach(k=>{d[k]=evidence[k];});}});
+   const days=[...merged.values()];
+   days.forEach(d=>{
+     if(Array.isArray(d.techniciansList))d.techniciansList=d.techniciansList.map(n=>n==='Steve'?'Steve H':n);
+     if(d.technicianArrivals?.Steve){d.technicianArrivals['Steve H']=d.technicianArrivals.Steve;delete d.technicianArrivals.Steve;}
+     if(d.toolboxTalk?.signatures?.Steve){d.toolboxTalk.signatures['Steve H']=d.toolboxTalk.signatures.Steve;delete d.toolboxTalk.signatures.Steve;}
+   });
+   if(currentDay){const saved=days.find(d=>String(d.id)===String(currentDay.id));if(saved)Object.assign(currentDay,saved);}
+   saveAll(days);await pending;if(!lastSaveError)entries.forEach(([k])=>localStorage.removeItem(k));renderSavedDays();if(currentDay)renderDay();
+ }).catch(e=>console.warn('Durable diary storage unavailable',e));
+})();
+</script>
 </body>
 </html>
